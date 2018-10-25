@@ -8,6 +8,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ArenaComponent } from './arena/arena.component';
 import { HeroDetailsComponent } from './hero-details/hero-details.component';
 import { HeroesComponent } from './heroes/heroes.component';
+import { HeroModelComponent } from './hero-model/hero-model.component';
+import { BattleLogComponent } from './battle-log/battle-log.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { HeroesComponent } from './heroes/heroes.component';
     DashboardComponent,
     ArenaComponent,
     HeroDetailsComponent,
-    HeroesComponent
+    HeroesComponent,
+    HeroModelComponent,
+    BattleLogComponent
   ],
   imports: [
     BrowserModule,
