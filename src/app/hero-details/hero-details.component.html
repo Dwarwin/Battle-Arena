@@ -1,3 +1,69 @@
-<p>
-  hero-details works!
-</p>
+<div *ngIf="hero">
+
+  <h2>{{hero.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{hero.id}}</div>
+
+  <div>
+    <label>Change name:
+      <input [(ngModel)]="hero.name" placeholder="name">
+    </label>
+  </div>
+
+  <h3>Hero stats:</h3>
+
+  <p>Free stats points:
+    {{ 50 - hero.strength - hero.dexterity - hero.constitution - hero.luck }}</p>
+
+  <div>
+    <label>Strength:
+    <mat-slider
+      class="stats"
+      [disabled]="disabled"
+      [(ngModel)]="hero.strength"
+      thumbLabel
+      min="10"
+      max="20"></mat-slider>
+    <span>{{ hero.strength }}</span>
+  </label>
+  </div>
+  <div>
+    <label>Dexterity:
+      <mat-slider
+        class="stats"
+        [disabled]="disabled"
+        [(ngModel)]="hero.dexterity"
+        thumbLabel
+        min="10"
+        max="20"></mat-slider>
+      <span>{{ hero.dexterity }}</span>
+    </label>
+  </div>
+  <div>
+    <label>Constitution:
+      <mat-slider
+        class="stats"
+        [disabled]="disabled"
+        [(ngModel)]="hero.constitution"
+        thumbLabel
+        min="10"
+        max="20"></mat-slider>
+      <span>{{ hero.constitution }}</span>
+    </label>
+  </div>
+  <div>
+    <label>Luck:
+      <mat-slider
+        class="stats"
+        [disabled]="disabled"
+        [(ngModel)]="hero.luck"
+        thumbLabel
+        min="10"
+        max="20"></mat-slider>
+      <span>{{ hero.luck }}</span>
+    </label>
+  </div>
+
+</div>
+<button (click)="goBack()">go back</button>
+<button (click)="save()">save</button>
+
