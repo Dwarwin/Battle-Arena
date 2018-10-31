@@ -18,7 +18,7 @@
     <label>Strength:
     <mat-slider
       class="stats"
-      [disabled]="disabled"
+      (change)="getFreeStats()"
       [(ngModel)]="hero.strength"
       thumbLabel
       min="10"
@@ -30,7 +30,7 @@
     <label>Dexterity:
       <mat-slider
         class="stats"
-        [disabled]="disabled"
+        (change)="getFreeStats()"
         [(ngModel)]="hero.dexterity"
         thumbLabel
         min="10"
@@ -42,7 +42,7 @@
     <label>Constitution:
       <mat-slider
         class="stats"
-        [disabled]="disabled"
+        (change)="getFreeStats()"
         [(ngModel)]="hero.constitution"
         thumbLabel
         min="10"
@@ -54,7 +54,7 @@
     <label>Luck:
       <mat-slider
         class="stats"
-        [disabled]="disabled"
+        (change)="getFreeStats()"
         [(ngModel)]="hero.luck"
         thumbLabel
         min="10"

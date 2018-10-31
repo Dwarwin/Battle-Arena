@@ -28,7 +28,7 @@ export class HeroDetailsComponent implements OnInit {
   getHero(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.heroService.getHero(id)
-      .subscribe(hero => this.hero = hero );
+      .subscribe(hero => this.hero = hero);
   }
 
   goBack(): void {
@@ -36,8 +36,10 @@ export class HeroDetailsComponent implements OnInit {
   }
 
   save(): void {
-    this.heroService.updateHero(this.hero)
-      .subscribe(() => this.goBack());
+    if (50 - this.hero.strength - this.hero.dexterity - this.hero.constitution - this.hero.luck >= 0) {
+      this.heroService.updateHero(this.hero)
+        .subscribe(() => this.goBack());
+    }
   }
 
 }
