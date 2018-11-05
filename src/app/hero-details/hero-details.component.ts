@@ -14,6 +14,7 @@ import { HeroService } from '../services/-hero.service';
 export class HeroDetailsComponent implements OnInit {
 
   hero: Hero;
+  changeNameStatus = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +33,10 @@ export class HeroDetailsComponent implements OnInit {
         this.hero = new Hero(hero);
         console.log(this.hero);
       });
+  }
+
+  changeName(): void {
+    this.changeNameStatus = !this.changeNameStatus;
   }
 
   goBack(): void {

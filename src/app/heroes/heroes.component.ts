@@ -26,7 +26,7 @@ export class HeroesComponent implements OnInit {
 
   add(name: string): void {
     name = name.trim();
-      if (!name || this.heroes.find((_) => _.name === name )) {
+      if (!name || this.heroes.find((_) => _.name.toLowerCase() === name.toLowerCase() )) {
       return;
     }
     this.heroService.addHero({name} as Hero)

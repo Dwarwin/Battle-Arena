@@ -2,11 +2,14 @@
 
   <h2>{{hero.name | uppercase}} Details</h2>
   <div><span>id: </span>{{hero.id}}</div>
+  <button (click)="changeName()">Change name</button>
 
-  <div>
-    <label>Change name:
+  <div *ngIf="changeNameStatus">
+    <label>New name:
       <input [(ngModel)]="hero.name" placeholder="name">
     </label>
+    <button (click)="saveNewName()">Cancel</button>
+    <button (click)="cancleChange()">Save</button>
   </div>
 
   <h3>Hero stats:</h3>
