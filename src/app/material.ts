@@ -3,7 +3,7 @@ import {
   MatButtonModule,
   MatCheckboxModule,
   MatProgressBarModule,
-  MatSliderModule
+  MatSliderModule,
 } from '@angular/material';
 
 @NgModule({

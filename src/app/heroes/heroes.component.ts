@@ -9,6 +9,7 @@ import { HeroService } from '../services/-hero.service';
   styleUrls: ['./heroes.component.sass']
 })
 export class HeroesComponent implements OnInit {
+
   heroes: Hero[];
 
   constructor(private heroService: HeroService) {
@@ -25,7 +26,7 @@ export class HeroesComponent implements OnInit {
 
   add(name: string): void {
     name = name.trim();
-    if (!name) {
+      if (!name || this.heroes.find((_) => _.name === name )) {
       return;
     }
     this.heroService.addHero({name} as Hero)

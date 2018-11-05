@@ -20,7 +20,6 @@ export class HeroService {
     private http: HttpClient) {
   }
 
-  /** GET heroes from the server */
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl)
       .pipe(
@@ -35,7 +34,6 @@ export class HeroService {
     );
   }
 
-  /* GET heroes whose name contains search term */
   searchHeroes(term: string): Observable<Hero[]> {
     if (!term.trim()) {
       // if not search term, return empty hero array.
@@ -46,16 +44,12 @@ export class HeroService {
     );
   }
 
-  //////// Save methods //////////
-
-  /** POST: add a new hero to the server */
   addHero(hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
       catchError(this.handleError<Hero>('addHero'))
     );
   }
 
-  /** DELETE: delete the hero from the server */
   deleteHero(hero: Hero | number): Observable<Hero> {
     const id = typeof hero === 'number' ? hero : hero.id;
     const url = `${this.heroesUrl}/${id}`;
@@ -65,7 +59,6 @@ export class HeroService {
     );
   }
 
-  /** PUT: update the hero on the server */
   updateHero(hero: Hero): Observable<any> {
     return this.http.put(this.heroesUrl, hero, httpOptions).pipe(
       catchError(this.handleError<any>('updateHero'))

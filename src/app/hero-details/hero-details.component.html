@@ -11,50 +11,46 @@
 
   <h3>Hero stats:</h3>
 
-  <p>Free stats points:
+  <p >Free stats points:
     {{ 50 - hero.strength - hero.dexterity - hero.constitution - hero.luck }}</p>
 
   <div>
     <label>Strength:
     <mat-slider
-      class="stats"
       [(ngModel)]="hero.strength"
       thumbLabel
-      min="10"
-      max="20"></mat-slider>
+      [min]="10"
+      [max]="20"></mat-slider>
     <span>{{ hero.strength }}</span>
   </label>
   </div>
   <div>
     <label>Dexterity:
       <mat-slider
-        class="stats"
         [(ngModel)]="hero.dexterity"
         thumbLabel
-        min="10"
-        max="20"></mat-slider>
+        [min]="10"
+        [max]="20"></mat-slider>
       <span>{{ hero.dexterity }}</span>
     </label>
   </div>
   <div>
     <label>Constitution:
       <mat-slider
-        class="stats"
         [(ngModel)]="hero.constitution"
         thumbLabel
-        min="10"
-        max="20"></mat-slider>
+        [min]="10"
+        [max]="20"></mat-slider>
       <span>{{ hero.constitution }}</span>
     </label>
   </div>
   <div>
     <label>Luck:
       <mat-slider
-        class="stats"
         [(ngModel)]="hero.luck"
         thumbLabel
-        min="10"
-        max="20"></mat-slider>
+        [min]="10"
+        [max]="20"></mat-slider>
       <span>{{ hero.luck }}</span>
     </label>
   </div>
