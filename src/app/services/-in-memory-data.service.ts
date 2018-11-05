@@ -2,6 +2,11 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Hero } from '../hero';
 
 export class InMemoryDataService implements InMemoryDbService {
+
+  // hero id + 1.
+  static genId(heroes: Hero[]): number {
+    return heroes.length > 0 ? Math.max(...heroes.map(hero => hero.id)) + 1 : 11;
+  }
   createDb() {
     const heroes = [
       {id: 11, name: 'Lucky', strength: 12, dexterity: 12, constitution: 10, luck: 16},
@@ -10,11 +15,6 @@ export class InMemoryDataService implements InMemoryDbService {
       {id: 14, name: 'Tower', strength: 13, dexterity: 10, constitution: 17, luck: 10}
     ];
     return {heroes};
-  }
-
-  // hero id + 1.
-  genId(heroes: Hero[]): number {
-    return heroes.length > 0 ? Math.max(...heroes.map(hero => hero.id)) + 1 : 11;
   }
 
 }
