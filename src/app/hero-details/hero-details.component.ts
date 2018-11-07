@@ -39,6 +39,14 @@ export class HeroDetailsComponent implements OnInit {
     this.changeNameStatus = !this.changeNameStatus;
   }
 
+  saveNewName(name): void {
+    this.heroService.getHeroes().subscribe(res => {
+      if (!res.find((_) => _.name.toLowerCase() === name.toLowerCase())) {
+        this.changeName();
+      }
+    });
+  }
+
   goBack(): void {
     this.location.back();
   }

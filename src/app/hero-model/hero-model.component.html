@@ -1,1 +1,7 @@
-
+<mat-form-field>
+  <mat-select placeholder="Choose a hero" [(ngModel)]="selected">
+    <mat-option *ngFor="let hero of heroes" [value]="hero">
+      {{ hero.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

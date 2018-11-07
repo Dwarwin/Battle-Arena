@@ -8,8 +8,7 @@
     <label>New name:
       <input [(ngModel)]="hero.name" placeholder="name">
     </label>
-    <button (click)="saveNewName()">Cancel</button>
-    <button (click)="cancleChange()">Save</button>
+    <button (click)="saveNewName(hero.name)">Save</button>
   </div>
 
   <h3>Hero stats:</h3>

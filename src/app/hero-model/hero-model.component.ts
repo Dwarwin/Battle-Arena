@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+
+import { Hero } from '../hero';
+import { HeroService} from '../services/-hero.service';
 
 @Component({
   selector: 'app-hero-model',
@@ -7,9 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeroModelComponent implements OnInit {
 
-  constructor() { }
+  heroes: Hero[];
+  hero: Hero;
+
+  constructor( private heroService: HeroService) { }
 
   ngOnInit() {
+    this.heroService.getHeroes().subscribe(res => this.heroes = res);
   }
 
 }
