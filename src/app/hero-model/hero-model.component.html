@@ -1,3 +1,4 @@
+<section *ngIf="!hero">
 <h4>Select a hero</h4>
 <mat-form-field>
   <mat-select (selectionChange)="getHero()" placeholder="Choose a hero" [(ngModel)]="selected">
@@ -7,11 +8,11 @@
   </mat-select>
   <mat-hint *ngIf="selected">Hero id:{{selected}}</mat-hint>
 </mat-form-field>
+</section>
 
-<mat-card *ngIf="hero">
+<section class="heroFullModel" *ngIf="hero">
   <h2>{{hero.name}}</h2>
 
-  <div>
   <mat-progress-bar
     class="heroHpBar"
     mode="determinate"
@@ -20,19 +21,18 @@
     [bufferValue]="hero.heroHP"
   ></mat-progress-bar>
   <span>{{hero.heroHP + "/" + hero.heroHP}}</span>
-  </div>
 
-  <div class="">
-    <div>
-      <img matCardImageXLarge src="../../assets/Hero.png" alt="Hero image">
+  <section class="hero">
+    <section class="heroModel">
+      <img class="heroImg" matCardImageXLarge src="../../assets/Hero.png" alt="Hero image">
       <div class="heroBodyParts" id="heroHead"></div>
       <div class="heroBodyParts" id="heroBody"></div>
       <div class="heroBodyParts" id="heroRightHand"></div>
       <div class="heroBodyParts" id="heroLeftHand"></div>
       <div class="heroBodyParts" id="heroRightLeg"></div>
       <div class="heroBodyParts" id="heroLeftLeg"></div>
-    </div>
-    <div>
+    </section>
+    <section class="heroStats">
       <h4>Hero primary stats :</h4>
       <ul>
         <li>Strength: {{ hero.strength }}</li>
@@ -46,6 +46,6 @@
         <li>Evade chance: {{ hero.evadeChance * 100 + "%" }}</li>
         <li>Critical hit chance: {{ hero.criticalHitChance * 100 + "%" }}</li>
       </ul>
-    </div>
-  </div>
-</mat-card>
+    </section>
+  </section>
+</section>

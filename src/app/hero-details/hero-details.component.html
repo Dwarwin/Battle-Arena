@@ -5,10 +5,10 @@
   <button mat-button (click)="changeName()">Change name</button>
 
   <div *ngIf="changeNameStatus">
-    <label>New name:
-      <input matInput [(ngModel)]="hero.name" placeholder="name">
-    </label>
-    <button mat-button (click)="saveNewName(hero.name)">Save</button>
+    <mat-form-field>
+    <input matInput [(ngModel)]="hero.name" placeholder="New name">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="saveNewName(hero.name)">Save</button>
   </div>
 
   <h3>Hero stats:</h3>
@@ -58,6 +58,6 @@
   </div>
 
 </div>
-<button mat-button (click)="goBack()">go back</button>
-<button mat-button (click)="save()">save</button>
+<button mat-raised-button color="warn" (click)="goBack()">go back</button>
+<button mat-raised-button color="primary" (click)="save()">save</button>
 

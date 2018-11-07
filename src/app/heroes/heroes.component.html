@@ -1,12 +1,12 @@
 <h2>My Heroes</h2>
-<div>
-  <label>Hero name:
-    <input #heroName />
-  </label>
+<form>
+  <mat-form-field class="example-full-width">
+    <input matInput #heroName placeholder="Create new Hero"/>
+  </mat-form-field>
   <button mat-button (click)="add(heroName.value); heroName.value=''">
     add
   </button>
-</div>
+</form>
 <mat-nav-list class="heroes">
   <mat-list-item *ngFor="let hero of heroes">
     <a routerLink="/detail/{{hero.id}}">
