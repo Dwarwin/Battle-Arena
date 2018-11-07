@@ -34,15 +34,15 @@ export class HeroService {
     );
   }
 
-  searchHeroes(term: string): Observable<Hero[]> {
-    if (!term.trim()) {
-      // if not search term, return empty hero array.
-      return of([]);
-    }
-    return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-      catchError(this.handleError<Hero[]>('searchHeroes', []))
-    );
-  }
+  // searchHeroes(term: string): Observable<Hero[]> {
+  //   if (!term.trim()) {
+  //     // if not search term, return empty hero array.
+  //     return of([]);
+  //   }
+  //   return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
+  //     catchError(this.handleError<Hero[]>('searchHeroes', []))
+  //   );
+  // }
 
   addHero(hero: Hero): Observable<Hero> {
     return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(

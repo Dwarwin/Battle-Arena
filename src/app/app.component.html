@@ -1,11 +1,14 @@
-<h1>
-  Welcome to {{ title }}!
-</h1>
-<nav>
-  <a routerLink="/dashboard">Dashboard </a>
-  <a routerLink="/heroes">Heroes </a>
-  <a routerLink="/arena">Arena </a>
-</nav>
+<mat-toolbar color="primary">
+    <span>
+      {{ title }}
+    </span>
+    <span class="fill-remaining-space"></span>
+    <mat-nav-list>
+      <a routerLink="/dashboard">Dashboard </a>
+      <a routerLink="/heroes">Heroes </a>
+      <a routerLink="/arena">Arena </a>
+    </mat-nav-list>
+</mat-toolbar>
 
 <router-outlet></router-outlet>
 

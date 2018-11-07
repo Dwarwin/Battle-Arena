@@ -4,9 +4,7 @@ import { Hero } from '../hero';
 export class InMemoryDataService implements InMemoryDbService {
 
   // hero id + 1.
-  static genId(heroes: Hero[]): number {
-    return heroes.length > 0 ? Math.max(...heroes.map(hero => hero.id)) + 1 : 11;
-  }
+
   createDb() {
     const heroes = [
       {id: 11, name: 'Lucky', strength: 12, dexterity: 12, constitution: 10, luck: 16},
@@ -17,4 +15,7 @@ export class InMemoryDataService implements InMemoryDbService {
     return {heroes};
   }
 
+  genId(heroes: Hero[]): number {
+    return heroes.length > 0 ? Math.max(...heroes.map(hero => hero.id)) + 1 : 11;
+  }
 }
