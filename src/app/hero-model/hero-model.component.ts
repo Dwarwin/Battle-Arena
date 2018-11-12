@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 
 import { Hero } from '../hero';
+import { HeroParts } from '../heroParts';
 import { HeroService} from '../services/-hero.service';
-import {BattleService} from '../services/battle.service';
-import {BattleLogService} from '../services/battle-log.service';
+import { BattleService } from '../services/battle.service';
+import { BattleLogService } from '../services/battle-log.service';
 
 @Component({
   selector: 'app-hero-model',
@@ -11,23 +12,28 @@ import {BattleLogService} from '../services/battle-log.service';
   styleUrls: ['./hero-model.component.sass']
 })
 
-export class HeroModelComponent implements OnInit {
+export class HeroModelComponent implements OnInit, OnChanges {
 
   @Input() enemy: boolean;
   heroes: Hero[];
   hero: Hero;
+  heroParts = HeroParts;
   selected: Hero;
   currentHP: number;
-
-  selectedHero: any = (enemy: boolean) =>  enemy ? this.battleService.enemyHero : this.battleService.yourHero;
+  selectedPoints: string[] = [];
 
   constructor(
     public heroService: HeroService,
     public battleService: BattleService,
-    public battleLogService: BattleLogService) { }
+    public battleLogService: BattleLogService
+  ) { }
 
   ngOnInit() {
     this.heroService.getHeroes().subscribe(res => this.heroes = res);
+    this.getCurrentHP();
+  }
+
+  ngOnChanges() {
     this.getCurrentHP();
   }
 
@@ -36,16 +42,30 @@ export class HeroModelComponent implements OnInit {
     this.heroService.getHero(id)
       .subscribe(hero => {
         this.hero = new Hero(hero);
-        this.selectedHero = this.hero;
+        this.battleService.getHero(this.hero, this.enemy);
         this.log(`You selected ${this.hero.name}`);
       });
   }
 
   getCurrentHP(): void {
-    this.enemy ? this.currentHP = this.battleService.enemyHeroHP : this.currentHP = this.battleService.yourHeroHP;
+    this.enemy
+      ? this.battleService.enemyCurrentHeroHP.subscribe(hp => this.currentHP = hp)
+      : this.battleService.yourCurrentHeroHP.subscribe(hp => this.currentHP = hp);
   }
 
   log(message: string) {
     this.battleLogService.add(`${message}`);
   }
+
+  choosePoint(point: string): void {
+    if (this.selectedPoints.indexOf(point) === -1) {
+      if (this.selectedPoints.length <= 1) {
+        this.selectedPoints.push(point);
+      }
+    } else {
+      this.selectedPoints = this.selectedPoints.filter(_ => _ !== point);
+    }
+    console.log(this.selectedPoints);
+  }
+
 }

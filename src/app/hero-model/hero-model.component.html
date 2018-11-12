@@ -21,7 +21,7 @@
     class="heroHpBar"
     mode="determinate"
     color="warn"
-    [value]="hero.heroHP"
+    [value]="currentHP || hero.heroHP"
     [bufferValue]="hero.heroHP"
   ></mat-progress-bar>
   <span>{{currentHP + "/" + hero.heroHP}}</span>
@@ -29,12 +29,8 @@
   <section class="hero" [style.flex-direction]="enemy ? 'row' : 'row-reverse'">
     <section class="heroModel" [style.transform]="enemy ? 'scale(-1,1)' : 'none'" >
       <img class="heroImg" matCardImageXLarge src="../../assets/hero.png" alt="Hero image">
-      <button mat-mini-fab class="heroBodyParts" id="heroHead"></button>
-      <button mat-mini-fab class="heroBodyParts" id="heroBody"></button>
-      <button mat-mini-fab class="heroBodyParts" id="heroRightHand"></button>
-      <button mat-mini-fab class="heroBodyParts" id="heroLeftHand"></button>
-      <button mat-mini-fab class="heroBodyParts" id="heroRightLeg"></button>
-      <button mat-mini-fab class="heroBodyParts" id="heroLeftLeg"></button>
+      <button *ngFor="let heroPart of heroParts" mat-mini-fab class="heroBodyParts" [id]="heroPart.part"
+              (click)="choosePoint(heroPart.part)"></button>
     </section>
     <section class="heroStats">
       <h4>Hero primary stats :</h4>
