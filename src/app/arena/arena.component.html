@@ -1,2 +1,8 @@
-<app-hero-model></app-hero-model>
+<section class="arenaBody">
+  <app-hero-model></app-hero-model>
+  <h1>VS</h1>
+  <app-hero-model [enemy]="true"></app-hero-model>
+</section>
 
+<mat-button-toggle id="showLogBTN" (click)="showLogToggle()">BattleLog</mat-button-toggle>
+<app-battle-log *ngIf="showLog"></app-battle-log>

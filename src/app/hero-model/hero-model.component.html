@@ -1,12 +1,16 @@
 <section *ngIf="!hero">
-<h4>Select a hero</h4>
+<h4 *ngIf="!enemy; else enemyHero">Select your hero</h4>
+  <ng-template #enemyHero>
+    <h4>Select your enemy</h4>
+  </ng-template>
 <mat-form-field>
-  <mat-select (selectionChange)="getHero()" placeholder="Choose a hero" [(ngModel)]="selected">
-    <mat-option *ngFor="let hero of heroes" [value]="hero.id">
+  <mat-select (selectionChange)="getHero()" [placeholder]="!enemy ? 'Choose your hero' : 'Choose your enemy'"
+              [(ngModel)]="selected">
+    <mat-option *ngFor="let hero of heroes" [value]="hero">
       {{hero.name}}
     </mat-option>
   </mat-select>
-  <mat-hint *ngIf="selected">Hero id:{{selected}}</mat-hint>
+  <mat-hint *ngIf="selected">Hero id:{{selected.id}}</mat-hint>
 </mat-form-field>
 </section>
 
@@ -20,11 +24,11 @@
     [value]="hero.heroHP"
     [bufferValue]="hero.heroHP"
   ></mat-progress-bar>
-  <span>{{hero.heroHP + "/" + hero.heroHP}}</span>
+  <span>{{currentHP + "/" + hero.heroHP}}</span>
 
-  <section class="hero">
-    <section class="heroModel">
-      <img class="heroImg" matCardImageXLarge src="../../assets/Hero.png" alt="Hero image">
+  <section class="hero" [style.flex-direction]="enemy ? 'row' : 'row-reverse'">
+    <section class="heroModel" [style.transform]="enemy ? 'scale(-1,1)' : 'none'" >
+      <img class="heroImg" matCardImageXLarge src="../../assets/hero.png" alt="Hero image">
       <button mat-mini-fab class="heroBodyParts" id="heroHead"></button>
       <button mat-mini-fab class="heroBodyParts" id="heroBody"></button>
       <button mat-mini-fab class="heroBodyParts" id="heroRightHand"></button>

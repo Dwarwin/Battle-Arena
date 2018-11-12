@@ -1,3 +1,5 @@
-<p>
-  battle-log works!
-</p>
+<section *ngIf="battleLogService.battleLog.length > -1" class="battleLog">
+  <div *ngFor="let message of battleLogService.battleLog">
+    <p>{{message}}</p>
+  </div>
+</section>

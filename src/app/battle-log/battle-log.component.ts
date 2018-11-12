@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {BattleLogService} from '../services/battle-log.service';
 
 @Component({
   selector: 'app-battle-log',
@@ -7,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BattleLogComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public battleLogService: BattleLogService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

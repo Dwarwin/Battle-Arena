@@ -5,5 +5,13 @@ import { Injectable } from '@angular/core';
 })
 export class BattleLogService {
 
-  constructor() { }
+  battleLog: string[] = [];
+
+  add (massage: string): void {
+    this.battleLog.push(massage);
+  }
+
+  clear(): void {
+    this.battleLog = [];
+  }
 }
