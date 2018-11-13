@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 import { Hero } from '../hero';
 import { HeroParts, EnemyHeroParts, Parts,  } from '../heroParts';
@@ -12,7 +12,7 @@ import { BattleLogService } from '../services/battle-log.service';
   styleUrls: ['./hero-model.component.sass']
 })
 
-export class HeroModelComponent implements OnInit, OnChanges {
+export class HeroModelComponent implements OnInit {
 
   @Input() enemy: boolean;
   heroes: Hero[];
@@ -31,10 +31,6 @@ export class HeroModelComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.heroService.getHeroes().subscribe(res => this.heroes = res);
-    this.getCurrentHP();
-  }
-
-  ngOnChanges() {
     this.getCurrentHP();
   }
 
