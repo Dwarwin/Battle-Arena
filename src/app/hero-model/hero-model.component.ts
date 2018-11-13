@@ -67,7 +67,7 @@ export class HeroModelComponent implements OnInit, OnChanges {
       this.selectedPoints = this.selectedPoints.filter(_ => _ !== point.part);
       point.checkStatus = false;
     }
-    console.log(this.selectedPoints, point);
+    console.log(this.selectedPoints, this.heroParts);
   }
 
 }
