@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 
 import { Hero } from '../hero';
-import { HeroParts } from '../heroParts';
+import { HeroParts, Parts } from '../heroParts';
 import { HeroService} from '../services/-hero.service';
 import { BattleService } from '../services/battle.service';
 import { BattleLogService } from '../services/battle-log.service';
@@ -17,7 +17,7 @@ export class HeroModelComponent implements OnInit, OnChanges {
   @Input() enemy: boolean;
   heroes: Hero[];
   hero: Hero;
-  heroParts = HeroParts;
+  heroParts: Parts[] = HeroParts;
   selected: Hero;
   currentHP: number;
   selectedPoints: string[] = [];
@@ -57,15 +57,17 @@ export class HeroModelComponent implements OnInit, OnChanges {
     this.battleLogService.add(`${message}`);
   }
 
-  choosePoint(point: string): void {
-    if (this.selectedPoints.indexOf(point) === -1) {
+  choosePoint(point: Parts): void {
+    if (this.selectedPoints.indexOf(point.part) === -1) {
       if (this.selectedPoints.length <= 1) {
-        this.selectedPoints.push(point);
+        this.selectedPoints.push(point.part);
+        point.checkStatus = true;
       }
     } else {
-      this.selectedPoints = this.selectedPoints.filter(_ => _ !== point);
+      this.selectedPoints = this.selectedPoints.filter(_ => _ !== point.part);
+      point.checkStatus = false;
     }
-    console.log(this.selectedPoints);
+    console.log(this.selectedPoints, point);
   }
 
 }
