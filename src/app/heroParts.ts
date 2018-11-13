@@ -7,11 +7,6 @@ export const HeroParts: Parts[] = [
   { part: 'heroLeftLeg', checkStatus: false }
 ];
 
-export class Parts {
-  part: string;
-  checkStatus: boolean;
-}
-
 export const EnemyHeroParts: Parts[] = [
   { part: 'enemyheroHead', checkStatus: false },
   { part: 'enemyheroBody', checkStatus: false },
@@ -21,4 +16,7 @@ export const EnemyHeroParts: Parts[] = [
   { part: 'enemyheroLeftLeg', checkStatus: false }
 ];
 
-
+export class Parts {
+  part: string;
+  checkStatus: boolean;
+}
