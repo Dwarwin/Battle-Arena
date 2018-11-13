@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 
 import { Hero } from '../hero';
-import { HeroParts, Parts } from '../heroParts';
+import { HeroParts, EnemyHeroParts, Parts,  } from '../heroParts';
 import { HeroService} from '../services/-hero.service';
 import { BattleService } from '../services/battle.service';
 import { BattleLogService } from '../services/battle-log.service';
@@ -18,6 +18,7 @@ export class HeroModelComponent implements OnInit, OnChanges {
   heroes: Hero[];
   hero: Hero;
   heroParts: Parts[] = HeroParts;
+  enemyParts: Parts[] = EnemyHeroParts;
   selected: Hero;
   currentHP: number;
   selectedPoints: string[] = [];

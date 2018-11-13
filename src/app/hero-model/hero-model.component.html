@@ -29,11 +29,11 @@
   <section class="hero" [style.flex-direction]="enemy ? 'row' : 'row-reverse'">
     <section class="heroModel" [style.transform]="enemy ? 'scale(-1,1)' : 'none'" >
       <img class="heroImg" matCardImageXLarge src="../../assets/hero.png" alt="Hero image">
-      <button *ngFor="let heroPart of heroParts"
-              [style.background-image]="heroPart.checkStatus && !enemy ? 'url(src/assets/block1.png)' : 'none'"
+      <button *ngFor="let heroPart of (!enemy ? heroParts :  enemyParts)"
+              [style.background-image]="heroPart.checkStatus ? (!enemy ? 'url(src/assets/block1.png)' : 'url(src/assets/attack2.png)') : 'none'"
               mat-mini-fab
               class="heroBodyParts"
-              [id]="!enemy ? heroPart.part : 'enemy'+heroPart.part"
+              [id]="!enemy ? heroPart.part : heroPart.part"
               (click)="choosePoint(heroPart)"></button>
     </section>
     <section class="heroStats">

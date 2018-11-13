@@ -11,3 +11,14 @@ export class Parts {
   part: string;
   checkStatus: boolean;
 }
+
+export const EnemyHeroParts: Parts[] = [
+  { part: 'enemyheroHead', checkStatus: false },
+  { part: 'enemyheroBody', checkStatus: false },
+  { part: 'enemyheroRightHand', checkStatus: false },
+  { part: 'enemyheroLeftHand', checkStatus: false },
+  { part: 'enemyheroRightLeg', checkStatus: false },
+  { part: 'enemyheroLeftLeg', checkStatus: false }
+];
+
+
