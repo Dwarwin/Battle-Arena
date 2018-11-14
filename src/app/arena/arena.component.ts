@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BattleLogService} from '../services/battle-log.service';
-import {BattleService} from '../services/battle.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BattleLogService } from '../services/battle-log.service';
+import { BattleService } from '../services/battle.service';
 
 @Component({
   selector: 'app-arena',

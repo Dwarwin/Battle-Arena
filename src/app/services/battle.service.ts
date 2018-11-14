@@ -36,5 +36,4 @@ export class BattleService {
       this.enemyHeroHP.next(hp);
     }
   }
-
 }

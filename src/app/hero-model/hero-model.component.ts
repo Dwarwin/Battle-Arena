@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input,  OnInit} from '@angular/core';
 
 import { Hero } from '../hero';
-import { HeroParts, EnemyHeroParts, Parts,  } from '../heroParts';
+import { HeroParts, EnemyHeroParts, Parts } from '../heroParts';
 import { HeroService} from '../services/-hero.service';
 import { BattleService } from '../services/battle.service';
 import { BattleLogService } from '../services/battle-log.service';
