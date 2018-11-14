@@ -1,15 +1,19 @@
 .arenaBody
   display: flex
+  flex-direction: row
   justify-content: center
   flex-wrap: wrap
   margin: auto
+  @media screen and (max-width: 740px)
+    flex-direction: column
+    align-items: center
 
   .fightBtn
     margin: auto 50px
     width: 100px
 
   app-hero-model
-    margin: 0 25px
+    margin: 25px 25px
 
 .showLogBTN
   margin: auto

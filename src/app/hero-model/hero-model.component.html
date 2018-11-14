@@ -15,6 +15,7 @@
 </section>
 
 <section class="heroFullModel" *ngIf="battleStarted">
+
   <h2>{{hero.name}}</h2>
 
   <mat-progress-bar
@@ -37,15 +38,13 @@
               (click)="choosePoint(heroPart)"></button>
     </section>
     <section class="heroStats">
-      <h4>Hero primary stats :</h4>
-      <ul>
+      <ul class="primaryStats">
         <li>Strength: {{ hero.strength }}</li>
         <li>Dexterity: {{ hero.dexterity }}</li>
         <li>Constitution: {{ hero.constitution }}</li>
         <li>Luck: {{ hero.luck }}</li>
       </ul>
-      <h5>Advanced Stats:</h5>
-      <ul>
+      <ul class="advancedStats">
         <li>Damage: {{ hero.heroDamage }}</li>
         <li>Evade chance: {{ hero.evadeChance * 100 + "%" }}</li>
         <li>Critical hit chance: {{ hero.criticalHitChance * 100 + "%" }}</li>

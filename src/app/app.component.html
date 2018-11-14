@@ -2,12 +2,20 @@
     <span>
       {{ title }}
     </span>
-    <span class="fill-remaining-space"></span>
-    <mat-nav-list>
-      <a routerLink="/dashboard">Dashboard </a>
-      <a routerLink="/heroes">Heroes </a>
-      <a routerLink="/arena">Arena </a>
-    </mat-nav-list>
+  <span class="fill-remaining-space"></span>
+  <mat-nav-list>
+    <a routerLink="/dashboard">Dashboard </a>
+    <a routerLink="/heroes">Heroes </a>
+    <a routerLink="/arena">Arena </a>
+  </mat-nav-list>
+  <button class="menuButton" mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/dashboard">Dashboard</button>
+    <button mat-menu-item routerLink="/heroes">Heroes</button>
+    <button mat-menu-item routerLink="/arena">Arena</button>
+  </mat-menu>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
