@@ -1,4 +1,4 @@
-<section *ngIf="!hero">
+<section *ngIf="!battleStarted">
 <h4 *ngIf="!enemy; else enemyHero">Select your hero</h4>
   <ng-template #enemyHero>
     <h4>Select your enemy</h4>
@@ -14,7 +14,7 @@
 </mat-form-field>
 </section>
 
-<section class="heroFullModel" *ngIf="hero">
+<section class="heroFullModel" *ngIf="battleStarted">
   <h2>{{hero.name}}</h2>
 
   <mat-progress-bar

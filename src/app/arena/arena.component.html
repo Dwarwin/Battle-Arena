@@ -1,9 +1,14 @@
 <button mat-raised-button color="warn" (click)="dealDmg()">Deal dmg</button>
 <section class="arenaBody">
-  <app-hero-model></app-hero-model>
-  <h1>VS</h1>
-  <app-hero-model [enemy]="true"></app-hero-model>
+  <app-hero-model [battleStarted]="battleStarted"></app-hero-model>
+  <button *ngIf="!readyForBattle && !battleStarted"
+          (click)="startBattle()"
+          class="fightBtn" mat-fab
+          color="warn">
+    <strong>FIGHT</strong>
+  </button>
+  <app-hero-model [enemy]="true" [battleStarted]="battleStarted"></app-hero-model>
 </section>
 
-<mat-button-toggle id="showLogBTN" (click)="showLogToggle()">BattleLog</mat-button-toggle>
+<mat-button-toggle class="showLogBTN" (click)="showLogToggle()">BattleLog</mat-button-toggle>
 <app-battle-log *ngIf="showLog"></app-battle-log>

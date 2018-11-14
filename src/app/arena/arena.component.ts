@@ -10,6 +10,8 @@ import {BattleService} from '../services/battle.service';
 export class ArenaComponent implements OnInit, OnDestroy {
 
   showLog: boolean;
+  readyForBattle = false;
+  battleStarted: boolean;
 
   constructor(
     public battleLogService: BattleLogService,
@@ -17,6 +19,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.readyForBattleState();
   }
 
   ngOnDestroy() {
@@ -27,7 +30,16 @@ export class ArenaComponent implements OnInit, OnDestroy {
     this.showLog = !this.showLog;
   }
 
+  // TODO delete when finish battle service
   dealDmg(): void {
     this.battleService.changeHeroHp(Math.floor((Math.random() * 100) + 1), (() => Math.random() - 0.5 >= 0)());
+  }
+
+  readyForBattleState(): void {
+    this.battleService.readyForBattleState.subscribe(val => val !== 'yes' ? this.readyForBattle = true : this.readyForBattle = false);
+  }
+
+  startBattle(): void  {
+    this.battleStarted = !this.battleStarted;
   }
 }

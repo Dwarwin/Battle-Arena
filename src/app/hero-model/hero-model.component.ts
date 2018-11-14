@@ -15,6 +15,7 @@ import { BattleLogService } from '../services/battle-log.service';
 export class HeroModelComponent implements OnInit {
 
   @Input() enemy: boolean;
+  @Input() battleStarted: boolean;
   heroes: Hero[];
   hero: Hero;
   heroParts: Parts[] = HeroParts;
@@ -24,8 +25,8 @@ export class HeroModelComponent implements OnInit {
   selectedPoints: string[] = [];
 
   constructor(
-    public heroService: HeroService,
-    public battleService: BattleService,
+    private heroService: HeroService,
+    private battleService: BattleService,
     public battleLogService: BattleLogService
   ) { }
 

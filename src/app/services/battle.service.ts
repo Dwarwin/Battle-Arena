@@ -7,18 +7,19 @@ import { BattleLogService } from './battle-log.service';
 @Injectable({
   providedIn: 'root'
 })
+
 export class BattleService {
 
-  heroHP: number;
-  enemyHP: number;
   yourHero: Hero;
   enemyHero: Hero;
   attackedPoints: string[] = [];
   blockedPoints: string[] = [];
 
-  private yourHeroHP = new BehaviorSubject(50);
-  private yourEnemyHP = new BehaviorSubject(10);
+  private yourHeroHP = new BehaviorSubject<number>( 100);
+  private yourEnemyHP = new BehaviorSubject<number>(100);
+  private readyForBattle = new BehaviorSubject<string>('no');
 
+  readyForBattleState = this.readyForBattle.asObservable();
   yourCurrentHeroHP = this.yourHeroHP.asObservable();
   enemyCurrentHeroHP = this.yourEnemyHP.asObservable();
 
@@ -27,13 +28,9 @@ export class BattleService {
   ) { }
 
   getHero(hero: Hero, enemy: boolean): void {
-    if (enemy) {
-      this.enemyHero = hero;
-      this.enemyHP = hero.heroHP;
-    } else {
-      this.yourHero = hero;
-      this.heroHP = hero.heroHP;
-    }
+    enemy ? this.enemyHero = hero : this.yourHero = hero;
+    this.changeHeroHp(hero.heroHP, enemy);
+    this.readyForBattle.next(this.yourHero && this.enemyHero ? 'yes' : 'no');
   }
 
   changeHeroHp(hp: number, enemy: boolean) {

@@ -8,12 +8,12 @@ export const HeroParts: Parts[] = [
 ];
 
 export const EnemyHeroParts: Parts[] = [
-  { part: 'enemyheroHead', checkStatus: false },
-  { part: 'enemyheroBody', checkStatus: false },
-  { part: 'enemyheroRightHand', checkStatus: false },
-  { part: 'enemyheroLeftHand', checkStatus: false },
-  { part: 'enemyheroRightLeg', checkStatus: false },
-  { part: 'enemyheroLeftLeg', checkStatus: false }
+  { part: 'enemyHeroHead', checkStatus: false },
+  { part: 'enemyHeroBody', checkStatus: false },
+  { part: 'enemyHeroRightHand', checkStatus: false },
+  { part: 'enemyHeroLeftHand', checkStatus: false },
+  { part: 'enemyHeroRightLeg', checkStatus: false },
+  { part: 'enemyHeroLeftLeg', checkStatus: false }
 ];
 
 export class Parts {
