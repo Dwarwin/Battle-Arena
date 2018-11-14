@@ -47,8 +47,8 @@ export class HeroModelComponent implements OnInit {
 
   getCurrentHP(): void {
     this.enemy
-      ? this.battleService.enemyCurrentHeroHP.subscribe(hp => this.currentHP = hp)
-      : this.battleService.yourCurrentHeroHP.subscribe(hp => this.currentHP = hp);
+      ? this.battleService.enemyHeroHP.subscribe(hp => this.currentHP = hp)
+      : this.battleService.yourHeroHP.subscribe(hp => this.currentHP = hp);
   }
 
   log(message: string) {
@@ -65,7 +65,6 @@ export class HeroModelComponent implements OnInit {
       this.selectedPoints = this.selectedPoints.filter(_ => _ !== point.part);
       point.checkStatus = false;
     }
-    console.log(this.selectedPoints, this.heroParts);
   }
 
 }

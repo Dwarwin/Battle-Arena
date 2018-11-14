@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 import { Hero} from '../hero';
 import { BattleLogService } from './battle-log.service';
@@ -15,13 +15,9 @@ export class BattleService {
   attackedPoints: string[] = [];
   blockedPoints: string[] = [];
 
-  private yourHeroHP = new BehaviorSubject<number>( 100);
-  private yourEnemyHP = new BehaviorSubject<number>(100);
-  private readyForBattle = new BehaviorSubject<string>('no');
-
-  readyForBattleState = this.readyForBattle.asObservable();
-  yourCurrentHeroHP = this.yourHeroHP.asObservable();
-  enemyCurrentHeroHP = this.yourEnemyHP.asObservable();
+  yourHeroHP = new Subject<number>();
+  enemyHeroHP = new Subject<number>();
+  readyForBattle = new BehaviorSubject<string>('no');
 
   constructor(
     public battleLogService: BattleLogService
@@ -37,7 +33,7 @@ export class BattleService {
     if (!enemy) {
       this.yourHeroHP.next(hp);
     } else {
-      this.yourEnemyHP.next(hp);
+      this.enemyHeroHP.next(hp);
     }
   }
 

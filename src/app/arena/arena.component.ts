@@ -36,7 +36,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
   }
 
   readyForBattleState(): void {
-    this.battleService.readyForBattleState.subscribe(val => val !== 'yes' ? this.readyForBattle = true : this.readyForBattle = false);
+    this.battleService.readyForBattle.subscribe(val => val !== 'yes' ? this.readyForBattle = true : this.readyForBattle = false);
   }
 
   startBattle(): void  {
