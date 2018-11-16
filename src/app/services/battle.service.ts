@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { Hero} from '../hero';
+import { Hero } from '../hero';
+import { HeroParts, EnemyHeroParts } from '../heroParts';
 import { BattleLogService } from './battle-log.service';
 
 @Injectable({
@@ -12,6 +13,8 @@ export class BattleService {
 
   yourHero: Hero;
   enemyHero: Hero;
+  heroParts: string[] = HeroParts.map(obj => obj.part);
+  enemyHeroParts: string[] = EnemyHeroParts.map(obj => obj.part);
   attackedPoints: string[];
   blockedPoints: string[];
 
@@ -31,9 +34,9 @@ export class BattleService {
 
   changeHeroHp(hp: number, enemy: boolean) {
     if (!enemy) {
-      this.yourHeroHP.next(hp);
+      this.yourHeroHP.next(hp > 0 ? hp : 0);
     } else {
-      this.enemyHeroHP.next(hp);
+      this.enemyHeroHP.next(hp > 0 ? hp : 0);
     }
   }
 
@@ -46,14 +49,16 @@ export class BattleService {
   }
 
   newRound(): void {
-    this.attackResult(this.attackedPoints, this.blockedPoints, this.yourHero, false);
-
+    const enemyAttacks: string[] = this.shafflePoints(this.enemyHeroParts);
+    const enemyBlocks: string[] = this.shafflePoints(this.heroParts);
+    this.attackResult(this.attackedPoints, enemyBlocks, this.yourHero, false);
+    this.attackResult(enemyAttacks, enemyBlocks, this.enemyHero, true);
   }
 
   attackResult(attacked: string[], blocked: string[], hero: Hero, enemy: boolean): void {
     const attackedPointsResult = attacked;
     blocked.forEach(elem => {
-      attacked = this.attackedPoints.filter(_ => _ !== elem);
+      attacked = this.attackedPoints.filter(_ => _ !== 'enemy' + elem);
       attacked.length < 2 ? this.battleLogService.add(
         !enemy ? 'Your attack was blocked' : 'You have successfully blocked ' + this.enemyHero.name + '`s attack')
         : console.log('succeeded');
@@ -69,7 +74,7 @@ export class BattleService {
       } else {
         critical = Math.floor(Math.random() * 100) <= hero.criticalHitChance;
         damage = hero.heroDamage * (critical ? 1.5 : 1);
-        !enemy ? this.yourHeroHP.next(this.enemyHeroHP.subscribe(hp => return h-););
+        enemy ? this.yourHeroHP.next(this.yourHeroHP.value - damage) : this.enemyHeroHP.next(this.enemyHeroHP.value - damage);
         this.battleLogService.add(
           !enemy
             ? 'You dealt ' + damage + ' to ' + this.enemyHero.name + critHit
@@ -78,4 +83,7 @@ export class BattleService {
     });
   }
 
+  shafflePoints(arr: string[]): string[] {
+    return arr.sort(_ => .5 - Math.random()).slice(0, 2);
+  }
 }

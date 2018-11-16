@@ -32,7 +32,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
 
   // TODO delete when finish battle service
   dealDmg(): void {
-    this.battleService.changeHeroHp(Math.floor((Math.random() * 100) + 1), (() => Math.random() - 0.5 >= 0)());
+    this.battleService.newRound();
   }
 
   readyForBattleState(): void {
