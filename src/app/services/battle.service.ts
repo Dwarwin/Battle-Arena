@@ -56,14 +56,13 @@ export class BattleService {
   }
 
   attackResult(attacked: string[], blocked: string[], hero: Hero, enemy: boolean): void {
-    const attackedPointsResult = attacked;
     blocked.forEach(elem => {
       attacked = this.attackedPoints.filter(_ => _ !== 'enemy' + elem);
       attacked.length < 2 ? this.battleLogService.add(
         !enemy ? 'Your attack was blocked' : 'You have successfully blocked ' + this.enemyHero.name + '`s attack')
         : console.log('succeeded');
     });
-    attacked.forEach(attack => {
+    attacked.forEach(() => {
       let damage: number;
       let critical: boolean;
       const critHit: string = critical ? ' Critical hit!' : '.';
@@ -84,6 +83,6 @@ export class BattleService {
   }
 
   shafflePoints(arr: string[]): string[] {
-    return arr.sort(_ => .5 - Math.random()).slice(0, 2);
+    return arr.sort(() => .5 - Math.random()).slice(0, 2);
   }
 }
