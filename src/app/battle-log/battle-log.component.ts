@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BattleLogService} from '../services/battle-log.service';
+import { BattleLogService } from '../services/battle-log.service';
 
 @Component({
   selector: 'app-battle-log',

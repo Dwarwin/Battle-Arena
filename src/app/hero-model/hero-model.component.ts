@@ -59,10 +59,12 @@ export class HeroModelComponent implements OnInit {
     if (this.selectedPoints.indexOf(point.part) === -1) {
       if (this.selectedPoints.length <= 1) {
         this.selectedPoints.push(point.part);
+        this.battleService.selectedPoints(this.selectedPoints, this.enemy);
         point.checkStatus = true;
       }
     } else {
       this.selectedPoints = this.selectedPoints.filter(_ => _ !== point.part);
+      this.battleService.selectedPoints(this.selectedPoints, this.enemy);
       point.checkStatus = false;
     }
   }
