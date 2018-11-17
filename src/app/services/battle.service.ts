@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { Hero } from '../hero';
-import { HeroParts, EnemyHeroParts } from '../heroParts';
+import { HeroParts, EnemyHeroParts, Parts } from '../heroParts';
 import { BattleLogService } from './battle-log.service';
 
 @Injectable({
@@ -19,8 +19,8 @@ export class BattleService {
   enemyHero: Hero;
   heroParts: string[] = HeroParts.map(obj => obj.part);
   enemyParts: string[] = EnemyHeroParts.map(obj => obj.part);
-  attackedPoints: string[];
-  blockedPoints: string[];
+  attackedPoints: string[] = [];
+  blockedPoints: string[] = [];
 
   yourHeroHP = new BehaviorSubject<number>(100);
   enemyHeroHP = new BehaviorSubject<number>(100);
@@ -47,17 +47,24 @@ export class BattleService {
 
   changeHeroHp(hp: number, enemy: boolean) {
     if (!enemy) {
-      this.yourHeroHP.next(hp > 0 ? hp : 0);
+      this.yourHeroHP.next(hp);
     } else {
-      this.enemyHeroHP.next(hp > 0 ? hp : 0);
+      this.enemyHeroHP.next(hp);
     }
   }
 
-  selectedPoints(points: string[], enemy: boolean): void {
-    if (enemy) {
-      this.attackedPoints = points;
+  selectedPoints(point: Parts, enemy: boolean): void {
+    const selectedPoints = (enemy ? this.attackedPoints : this.blockedPoints);
+    if (selectedPoints.indexOf(point.part) === -1) {
+      if (selectedPoints.length <= 1) {
+        selectedPoints.push(point.part);
+        point.checkStatus = true;
+      }
     } else {
-      this.blockedPoints = points;
+      enemy
+        ? this.attackedPoints = selectedPoints.filter(_ => _ !== point.part)
+        : this.blockedPoints = selectedPoints.filter(_ => _ !== point.part);
+      point.checkStatus = false;
     }
   }
 
@@ -65,7 +72,7 @@ export class BattleService {
     const enemyAttacks: string[] = BattleService.shufflePoints(this.heroParts);
     const enemyBlocks: string[] = BattleService.shufflePoints(this.enemyParts);
     this.attackResult(this.attackedPoints, enemyBlocks, this.yourHero, this.enemyHero, false);
-    this.attackResult(enemyAttacks, this.blockedPoints, this.enemyHero, this.yourHero , true);
+    this.attackResult(enemyAttacks, this.blockedPoints, this.enemyHero, this.yourHero, true);
     this.attackedPoints = [];
     this.blockedPoints = [];
   }
@@ -86,6 +93,7 @@ export class BattleService {
       }
     });
     blocks.forEach(() => {
+      const currentHp: number = enemy ? this.yourHeroHP.value : this.enemyHeroHP.value;
       let damage: number;
       let critical = false;
       if (Math.round(Math.random() * 100) <= enemyHero.evadeChance) {
@@ -95,7 +103,7 @@ export class BattleService {
       } else {
         critical = Math.round(Math.random() * 100) <= hero.criticalHitChance;
         damage = hero.heroDamage * (critical ? 2 : 1);
-        enemy ? this.yourHeroHP.next(this.yourHeroHP.value - damage) : this.enemyHeroHP.next(this.enemyHeroHP.value - damage);
+        enemy ? this.yourHeroHP.next(currentHp - damage) : this.enemyHeroHP.next(currentHp - damage);
         this.battleLogService.add(
           !enemy
             ? 'You dealt ' + damage + ' damage to ' + this.enemyHero.name + (critical ? '. Critical hit!' : '.')
