@@ -59,7 +59,6 @@ export class BattleService {
     } else {
       this.blockedPoints = points;
     }
-    console.log(points, this.attackedPoints, this.blockedPoints);
   }
 
   newRound(): void {
@@ -67,22 +66,26 @@ export class BattleService {
     const enemyBlocks: string[] = BattleService.shufflePoints(this.enemyParts);
     this.attackResult(this.attackedPoints, enemyBlocks, this.yourHero, this.enemyHero, false);
     this.attackResult(enemyAttacks, this.blockedPoints, this.enemyHero, this.yourHero , true);
+    this.attackedPoints = [];
+    this.blockedPoints = [];
   }
 
   attackResult(attacked: string[], blocked: string[], hero: Hero, enemyHero: Hero, enemy: boolean): void {
     this.battleLogService.add(!enemy ? '----Your turn----' : '----' + this.enemyHero.name + '`s turn----');
     let blocks: string[] = attacked;
+    console.log(attacked, blocked);
     blocked.forEach(elem => {
-      attacked = this.attackedPoints.filter(point => point !== elem);
+      attacked = attacked.filter(point => point !== elem);
+      console.log(attacked, blocked, blocks);
       if (attacked.length !== blocks.length) {
         this.battleLogService.add(
           !enemy
             ? 'Your attack was blocked'
             : 'You have successfully blocked ' + this.enemyHero.name + '`s attack');
+        blocks = attacked;
       }
-      blocks = attacked;
     });
-    attacked.forEach(() => {
+    blocks.forEach(() => {
       let damage: number;
       let critical = false;
       if (Math.round(Math.random() * 100) <= enemyHero.evadeChance) {
@@ -91,7 +94,7 @@ export class BattleService {
             ? enemyHero.name + ' has evaded your attack' : 'You have successfully evaded ' + this.enemyHero.name + '`s attack');
       } else {
         critical = Math.round(Math.random() * 100) <= hero.criticalHitChance;
-        damage = hero.heroDamage * (critical ? 1.5 : 1);
+        damage = hero.heroDamage * (critical ? 2 : 1);
         enemy ? this.yourHeroHP.next(this.yourHeroHP.value - damage) : this.enemyHeroHP.next(this.enemyHeroHP.value - damage);
         this.battleLogService.add(
           !enemy
