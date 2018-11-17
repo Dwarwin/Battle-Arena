@@ -1,22 +1,22 @@
-<div *ngIf="hero">
+<section class="stats" *ngIf="hero">
 
   <h2>{{hero.name | uppercase}} Details</h2>
-  <div><span>id: </span>{{hero.id}}</div>
+  <section><span>id: </span>{{hero.id}}</section>
   <button mat-button (click)="changeName()">Change name</button>
 
-  <div *ngIf="changeNameStatus">
+  <section *ngIf="changeNameStatus">
     <mat-form-field>
     <input matInput [(ngModel)]="hero.name" placeholder="New name">
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="saveNewName(hero.name)">Save</button>
-  </div>
+  </section>
 
   <h3>Hero stats:</h3>
 
   <p >Free stats points:
     {{ 50 - hero.strength - hero.dexterity - hero.constitution - hero.luck }}</p>
 
-  <div>
+  <section>
     <label>Strength:
     <mat-slider
       [(ngModel)]="hero.strength"
@@ -25,8 +25,8 @@
       [max]="20"></mat-slider>
     <span>{{ hero.strength }}</span>
   </label>
-  </div>
-  <div>
+  </section>
+  <section>
     <label>Dexterity:
       <mat-slider
         [(ngModel)]="hero.dexterity"
@@ -35,8 +35,8 @@
         [max]="20"></mat-slider>
       <span>{{ hero.dexterity }}</span>
     </label>
-  </div>
-  <div>
+  </section>
+  <section>
     <label>Constitution:
       <mat-slider
         [(ngModel)]="hero.constitution"
@@ -45,8 +45,8 @@
         [max]="20"></mat-slider>
       <span>{{ hero.constitution }}</span>
     </label>
-  </div>
-  <div>
+  </section>
+  <section>
     <label>Luck:
       <mat-slider
         [(ngModel)]="hero.luck"
@@ -55,9 +55,9 @@
         [max]="20"></mat-slider>
       <span>{{ hero.luck }}</span>
     </label>
-  </div>
+  </section>
 
-</div>
+</section>
 <button mat-raised-button color="warn" (click)="goBack()">go back</button>
 <button mat-raised-button color="primary" (click)="save()">save</button>
 

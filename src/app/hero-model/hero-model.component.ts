@@ -22,7 +22,6 @@ export class HeroModelComponent implements OnInit {
   enemyParts: Parts[] = EnemyHeroParts;
   selected: Hero;
   currentHP: number;
-  selectedPoints: string[] = [];
 
   constructor(
     private heroService: HeroService,

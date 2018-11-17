@@ -113,4 +113,9 @@ export class BattleService {
       }
     });
   }
+
+  endBattle(): void {
+
+  }
+
 }
