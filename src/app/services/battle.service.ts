@@ -78,24 +78,26 @@ export class BattleService {
   }
 
   attackResult(attacked: string[], blocked: string[], hero: Hero, enemyHero: Hero, enemy: boolean): void {
+    const currentHp: number = enemy ? this.yourHeroHP.value : this.enemyHeroHP.value;
+    let notBlocked: string[] = attacked;
+
     this.battleLogService.add(!enemy ? '----Your turn----' : '----' + this.enemyHero.name + '`s turn----');
-    let blocks: string[] = attacked;
-    console.log(attacked, blocked);
+
     blocked.forEach(elem => {
       attacked = attacked.filter(point => point !== elem);
-      console.log(attacked, blocked, blocks);
-      if (attacked.length !== blocks.length) {
+      if (attacked.length !== notBlocked.length) {
         this.battleLogService.add(
           !enemy
             ? 'Your attack was blocked'
             : 'You have successfully blocked ' + this.enemyHero.name + '`s attack');
-        blocks = attacked;
+        notBlocked = attacked;
       }
     });
-    blocks.forEach(() => {
-      const currentHp: number = enemy ? this.yourHeroHP.value : this.enemyHeroHP.value;
+
+    notBlocked.forEach(() => {
       let damage: number;
       let critical = false;
+
       if (Math.round(Math.random() * 100) <= enemyHero.evadeChance) {
         this.battleLogService.add(
           !enemy
