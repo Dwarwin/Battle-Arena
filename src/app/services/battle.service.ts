@@ -17,17 +17,17 @@ export class BattleService {
 
   yourHero: Hero;
   enemyHero: Hero;
-  heroParts: string[] = HeroParts.map(obj => obj.part);
-  enemyParts: string[] = EnemyHeroParts.map(obj => obj.part);
-  attackedPoints: string[] = [];
-  blockedPoints: string[] = [];
+  heroParts: Parts[] = HeroParts.map(obj => obj);
+  enemyParts: Parts[] = EnemyHeroParts.map(obj => obj);
+  attackedPoints: Parts[] = [];
+  blockedPoints: Parts[] = [];
 
   yourHeroHP = new BehaviorSubject<number>(100);
   enemyHeroHP = new BehaviorSubject<number>(100);
   readyForBattle = new BehaviorSubject<string>('no');
 
-  static shufflePoints(arr: string[]): string[] {
-    const newArr: string[] = [];
+  static shufflePoints(arr: Parts[]): Parts[] {
+    const newArr: Parts[] = [];
     const tempIndex: number = Math.floor(Math.random() * (arr.length));
     newArr.push(arr[tempIndex]);
     while (newArr.length < 2) {
@@ -55,35 +55,36 @@ export class BattleService {
 
   selectedPoints(point: Parts, enemy: boolean): void {
     const selectedPoints = (enemy ? this.attackedPoints : this.blockedPoints);
-    if (selectedPoints.indexOf(point.part) === -1) {
+    if (selectedPoints.indexOf(point) === -1) {
       if (selectedPoints.length <= 1) {
-        selectedPoints.push(point.part);
+        selectedPoints.push(point);
         point.checkStatus = true;
       }
     } else {
       enemy
-        ? this.attackedPoints = selectedPoints.filter(_ => _ !== point.part)
-        : this.blockedPoints = selectedPoints.filter(_ => _ !== point.part);
+        ? this.attackedPoints = selectedPoints.filter(_ => _ !== point)
+        : this.blockedPoints = selectedPoints.filter(_ => _ !== point);
       point.checkStatus = false;
     }
   }
 
   newRound(): void {
-    const enemyAttacks: string[] = BattleService.shufflePoints(this.heroParts);
-    const enemyBlocks: string[] = BattleService.shufflePoints(this.enemyParts);
+    const enemyAttacks: Parts[] = BattleService.shufflePoints(this.heroParts);
+    const enemyBlocks: Parts[] = BattleService.shufflePoints(this.enemyParts);
     this.attackResult(this.attackedPoints, enemyBlocks, this.yourHero, this.enemyHero, false);
     this.attackResult(enemyAttacks, this.blockedPoints, this.enemyHero, this.yourHero, true);
     this.attackedPoints = [];
     this.blockedPoints = [];
   }
 
-  attackResult(attacked: string[], blocked: string[], hero: Hero, enemyHero: Hero, enemy: boolean): void {
+  attackResult(attacked: Parts[], blocked: Parts[], hero: Hero, enemyHero: Hero, enemy: boolean): void {
     const currentHp: number = enemy ? this.yourHeroHP.value : this.enemyHeroHP.value;
-    let notBlocked: string[] = attacked;
+    let notBlocked: Parts[] = attacked;
 
     this.battleLogService.add(!enemy ? '----Your turn----' : '----' + this.enemyHero.name + '`s turn----');
-
+    attacked.forEach((_) => { _.checkStatus = false; });
     blocked.forEach(elem => {
+      elem.checkStatus = false;
       attacked = attacked.filter(point => point !== elem);
       if (attacked.length !== notBlocked.length) {
         this.battleLogService.add(
