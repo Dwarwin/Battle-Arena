@@ -23,7 +23,7 @@
     mode="determinate"
     color="warn"
     [value]="currentHP / hero.heroHP * 100 || hero.heroHP"
-    [bufferValue]="hero.heroHP"
+    [bufferValue]="hero.heroHP+1"
   ></mat-progress-bar>
   <span>{{currentHP + "/" + hero.heroHP}}</span>
 

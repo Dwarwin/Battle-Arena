@@ -47,10 +47,11 @@ export class BattleService {
   }
 
   changeHeroHp(hp: number, enemy: boolean) {
+    const HP = hp > 0 ? hp : 0;
     if (!enemy) {
-      this.yourHeroHP.next(hp);
+      this.yourHeroHP.next(HP);
     } else {
-      this.enemyHeroHP.next(hp);
+      this.enemyHeroHP.next(HP);
     }
   }
 
@@ -76,9 +77,10 @@ export class BattleService {
   }
 
   newRound(): void {
-    this.battleLogService.clear();
     const enemyAttacks: Parts[] = BattleService.shufflePoints(this.heroParts);
     const enemyBlocks: Parts[] = BattleService.shufflePoints(this.enemyParts);
+
+    this.battleLogService.clear();
     this.attackResult(this.attackedPoints, enemyBlocks, this.yourHero, this.enemyHero, false);
     this.attackResult(enemyAttacks, this.blockedPoints, this.enemyHero, this.yourHero, true);
     this.attackedPoints = [];
@@ -115,7 +117,7 @@ export class BattleService {
       } else {
         critical = Math.round(Math.random() * 100) <= hero.criticalHitChance;
         damage = hero.heroDamage * (critical ? 2 : 1);
-        enemy ? this.yourHeroHP.next(currentHp - damage) : this.enemyHeroHP.next(currentHp - damage);
+        this.changeHeroHp(currentHp - damage, !enemy);
         this.log(
           !enemy
             ? 'You dealt ' + damage + ' damage to ' + this.enemyHero.name + (critical ? '. Critical hit!' : '.')
