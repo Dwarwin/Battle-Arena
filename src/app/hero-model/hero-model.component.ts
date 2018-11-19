@@ -4,7 +4,6 @@ import { Hero } from '../hero';
 import { HeroParts, EnemyHeroParts, Parts } from '../heroParts';
 import { HeroService} from '../services/-hero.service';
 import { BattleService } from '../services/battle.service';
-import { BattleLogService } from '../services/battle-log.service';
 
 @Component({
   selector: 'app-hero-model',
@@ -26,7 +25,6 @@ export class HeroModelComponent implements OnInit {
   constructor(
     private heroService: HeroService,
     private battleService: BattleService,
-    public battleLogService: BattleLogService
   ) { }
 
   ngOnInit() {
@@ -40,7 +38,6 @@ export class HeroModelComponent implements OnInit {
       .subscribe(hero => {
         this.hero = new Hero(hero);
         this.battleService.getHero(this.hero, this.enemy);
-        this.log(`You selected ${this.hero.name}`);
       });
   }
 
@@ -48,10 +45,6 @@ export class HeroModelComponent implements OnInit {
     this.enemy
       ? this.battleService.enemyHeroHP.subscribe(hp => this.currentHP = hp)
       : this.battleService.yourHeroHP.subscribe(hp => this.currentHP = hp);
-  }
-
-  log(message: string) {
-    this.battleLogService.add(`${message}`);
   }
 
   choosePoint(point: Parts): void {

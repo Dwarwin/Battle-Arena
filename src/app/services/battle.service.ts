@@ -25,6 +25,7 @@ export class BattleService {
   yourHeroHP = new BehaviorSubject<number>(100);
   enemyHeroHP = new BehaviorSubject<number>(100);
   readyForBattle = new BehaviorSubject<string>('no');
+  readyForRound = new BehaviorSubject<string>('no');
 
   static shufflePoints(arr: Parts[]): Parts[] {
     const newArr: Parts[] = [];
@@ -53,6 +54,11 @@ export class BattleService {
     }
   }
 
+  readyForRoundState(): void {
+    const readyState = this.attackedPoints.length === 2 && this.blockedPoints.length;
+    this.readyForRound.next(readyState === 2 ? 'yes' : 'no');
+  }
+
   selectedPoints(point: Parts, enemy: boolean): void {
     const selectedPoints = (enemy ? this.attackedPoints : this.blockedPoints);
     if (selectedPoints.indexOf(point) === -1) {
@@ -66,28 +72,31 @@ export class BattleService {
         : this.blockedPoints = selectedPoints.filter(_ => _ !== point);
       point.checkStatus = false;
     }
+    this.readyForRoundState();
   }
 
   newRound(): void {
+    this.battleLogService.clear();
     const enemyAttacks: Parts[] = BattleService.shufflePoints(this.heroParts);
     const enemyBlocks: Parts[] = BattleService.shufflePoints(this.enemyParts);
     this.attackResult(this.attackedPoints, enemyBlocks, this.yourHero, this.enemyHero, false);
     this.attackResult(enemyAttacks, this.blockedPoints, this.enemyHero, this.yourHero, true);
     this.attackedPoints = [];
     this.blockedPoints = [];
+    this.readyForRoundState();
   }
 
   attackResult(attacked: Parts[], blocked: Parts[], hero: Hero, enemyHero: Hero, enemy: boolean): void {
     const currentHp: number = enemy ? this.yourHeroHP.value : this.enemyHeroHP.value;
     let notBlocked: Parts[] = attacked;
 
-    this.battleLogService.add(!enemy ? '----Your turn----' : '----' + this.enemyHero.name + '`s turn----');
+    this.log(!enemy ? '----Your turn----' : '----' + this.enemyHero.name + '`s turn----');
     attacked.forEach((_) => { _.checkStatus = false; });
     blocked.forEach(elem => {
       elem.checkStatus = false;
       attacked = attacked.filter(point => point !== elem);
       if (attacked.length !== notBlocked.length) {
-        this.battleLogService.add(
+        this.log(
           !enemy
             ? 'Your attack was blocked'
             : 'You have successfully blocked ' + this.enemyHero.name + '`s attack');
@@ -100,19 +109,23 @@ export class BattleService {
       let critical = false;
 
       if (Math.round(Math.random() * 100) <= enemyHero.evadeChance) {
-        this.battleLogService.add(
+        this.log(
           !enemy
             ? enemyHero.name + ' has evaded your attack' : 'You have successfully evaded ' + this.enemyHero.name + '`s attack');
       } else {
         critical = Math.round(Math.random() * 100) <= hero.criticalHitChance;
         damage = hero.heroDamage * (critical ? 2 : 1);
         enemy ? this.yourHeroHP.next(currentHp - damage) : this.enemyHeroHP.next(currentHp - damage);
-        this.battleLogService.add(
+        this.log(
           !enemy
             ? 'You dealt ' + damage + ' damage to ' + this.enemyHero.name + (critical ? '. Critical hit!' : '.')
             : this.enemyHero.name + ' dealt you ' + damage + ' damage' + (critical ? '. Critical hit!' : '.'));
       }
     });
+  }
+
+  log(message: string) {
+    this.battleLogService.add(`${message}`);
   }
 
   endBattle(): void {

@@ -1,4 +1,9 @@
-<button mat-raised-button color="warn" (click)="dealDmg()">Deal dmg</button>
+<button mat-raised-button color="warn"
+        class="roundBTN"
+        *ngIf="battleStarted"
+        [disabled]="readyForRound"
+        (click)="dealDmg()"><strong>Start Round</strong>
+</button>
 <section class="arenaBody">
   <app-hero-model [battleStarted]="battleStarted"></app-hero-model>
   <button *ngIf="!readyForBattle && !battleStarted"
@@ -7,8 +12,9 @@
           color="warn">
     <strong>FIGHT</strong>
   </button>
+  <app-battle-log *ngIf="!showLog && battleStarted"></app-battle-log>
   <app-hero-model [enemy]="true" [battleStarted]="battleStarted"></app-hero-model>
 </section>
 
 <mat-button-toggle class="showLogBTN" (click)="showLogToggle()">BattleLog</mat-button-toggle>
-<app-battle-log *ngIf="showLog"></app-battle-log>
+

@@ -12,6 +12,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
   showLog: boolean;
   readyForBattle = false;
   battleStarted: boolean;
+  readyForRound: boolean;
 
   constructor(
     public battleLogService: BattleLogService,
@@ -20,6 +21,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.readyForBattleState();
+    this.readyForRoundState();
   }
 
   ngOnDestroy() {
@@ -37,6 +39,10 @@ export class ArenaComponent implements OnInit, OnDestroy {
 
   readyForBattleState(): void {
     this.battleService.readyForBattle.subscribe(val => val !== 'yes' ? this.readyForBattle = true : this.readyForBattle = false);
+  }
+
+  readyForRoundState(): void {
+    this.battleService.readyForRound.subscribe(val => val !== 'yes' ? this.readyForRound = true : this.readyForRound = false);
   }
 
   startBattle(): void  {
