@@ -21,7 +21,7 @@ export class Hero {
     this.freeStats = 50 - this.strength - this.dexterity - this.constitution - this.luck;
     this.heroHP = this.constitution * 10;
     this.evadeChance = Math.round(10 + (this.dexterity - 10) * 7);
-    this.criticalHitChance = Math.round(10 + (this.luck - 10) * 10);
+    this.criticalHitChance = Math.round(10 + (this.luck - 9) * 10);
     this.heroDamage = 10 + Math.round((this.strength - 10));
   }
 }
