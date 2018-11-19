@@ -48,4 +48,8 @@ export class ArenaComponent implements OnInit, OnDestroy {
   startBattle(): void  {
     this.battleStarted = !this.battleStarted;
   }
+
+  endBattle(): void {
+    this.battleService.endBattle();
+  }
 }

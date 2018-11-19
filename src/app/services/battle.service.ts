@@ -89,7 +89,6 @@ export class BattleService {
   }
 
   attackResult(attacked: Parts[], blocked: Parts[], hero: Hero, enemyHero: Hero, enemy: boolean): void {
-    const currentHp: number = enemy ? this.yourHeroHP.value : this.enemyHeroHP.value;
     let notBlocked: Parts[] = attacked;
 
     this.log(!enemy ? '----Your turn----' : '----' + this.enemyHero.name + '`s turn----');
@@ -107,6 +106,7 @@ export class BattleService {
     });
 
     notBlocked.forEach(() => {
+      const currentHp: number = enemy ? this.yourHeroHP.value : this.enemyHeroHP.value;
       let damage: number;
       let critical = false;
 
@@ -128,10 +128,6 @@ export class BattleService {
 
   log(message: string) {
     this.battleLogService.add(`${message}`);
-  }
-
-  endBattle(): void {
-
   }
 
 }
