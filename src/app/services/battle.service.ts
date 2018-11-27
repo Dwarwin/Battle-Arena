@@ -26,6 +26,7 @@ export class BattleService {
   enemyHeroHP = new BehaviorSubject<number>(100);
   readyForBattle = new BehaviorSubject<string>('no');
   readyForRound = new BehaviorSubject<string>('no');
+  battleEnded = new BehaviorSubject<string>('no');
 
   static shufflePoints(arr: Parts[]): Parts[] {
     const newArr: Parts[] = [];
@@ -86,6 +87,21 @@ export class BattleService {
     this.attackedPoints = [];
     this.blockedPoints = [];
     this.readyForRoundState();
+    if (this.yourHeroHP.value <= 0 && this.enemyHeroHP.value <= 0) {
+      this.battleEnd('Draw');
+    } else if (this.yourHeroHP.value <= 0 ) {
+      this.battleEnd('You Lose');
+    } else if (this.enemyHeroHP.value <= 0 ) {
+      this.battleEnd('You Win');
+    }
+  }
+
+  battleEnd(result: string): void {
+    this.battleLogService.clear();
+    this.battleEnded.next('yes');
+    this.log(result);
+    delete this.yourHero;
+    delete this.enemyHero;
   }
 
   attackResult(attacked: Parts[], blocked: Parts[], hero: Hero, enemyHero: Hero, enemy: boolean): void {

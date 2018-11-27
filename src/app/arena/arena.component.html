@@ -1,8 +1,13 @@
 <button mat-raised-button color="warn"
         class="roundBTN"
-        *ngIf="battleStarted"
+        *ngIf="battleStarted && battleEnded"
         [disabled]="readyForRound"
         (click)="dealDmg()"><strong>Start Round</strong>
+</button>
+<button mat-raised-button color="warn"
+        class="roundBTN"
+        *ngIf="!battleEnded"
+        (click)="endBattle()"><strong>End Battle</strong>
 </button>
 <section class="arenaBody">
   <app-hero-model [battleStarted]="battleStarted"></app-hero-model>

@@ -1,4 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { BattleLogService } from '../services/battle-log.service';
 import { BattleService } from '../services/battle.service';
 
@@ -13,15 +15,18 @@ export class ArenaComponent implements OnInit, OnDestroy {
   readyForBattle = false;
   battleStarted: boolean;
   readyForRound: boolean;
+  battleEnded: boolean;
 
   constructor(
     public battleLogService: BattleLogService,
-    public battleService: BattleService) {
+    private router: Router,
+    private battleService: BattleService) {
   }
 
   ngOnInit() {
     this.readyForBattleState();
     this.readyForRoundState();
+    this.endBattleState();
   }
 
   ngOnDestroy() {
@@ -45,11 +50,19 @@ export class ArenaComponent implements OnInit, OnDestroy {
     this.battleService.readyForRound.subscribe(val => val !== 'yes' ? this.readyForRound = true : this.readyForRound = false);
   }
 
+  endBattleState(): void {
+    this.battleService.battleEnded.subscribe(val => val !== 'yes' ? this.battleEnded = true : this.battleEnded = false);
+  }
+
   startBattle(): void  {
     this.battleStarted = !this.battleStarted;
   }
 
   endBattle(): void {
-    this.battleService.endBattle();
+    this.battleService.battleEnded.next('no');
+    this.battleService.readyForBattle.next('no');
+    this.battleService.readyForRound.next('no');
+    this.router.navigate(['/dashboard']);
   }
+
 }
