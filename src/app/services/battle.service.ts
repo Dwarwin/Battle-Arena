@@ -97,7 +97,6 @@ export class BattleService {
   }
 
   battleEnd(result: string): void {
-    this.battleLogService.clear();
     this.battleEnded.next('yes');
     this.log(result);
     delete this.yourHero;
