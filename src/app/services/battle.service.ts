@@ -146,4 +146,16 @@ export class BattleService {
     this.battleLogService.add(`${message}`);
   }
 
+  clearService(): void {
+    this.battleEnded.next('no');
+    this.readyForBattle.next('no');
+    this.readyForRound.next('no');
+    this.attackedPoints.forEach((elem) => elem.checkStatus = false);
+    this.blockedPoints.forEach((elem) => elem.checkStatus = false);
+    this.attackedPoints = [];
+    this.blockedPoints = [];
+    delete this.yourHero;
+    delete this.enemyHero;
+  }
+
 }

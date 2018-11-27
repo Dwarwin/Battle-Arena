@@ -31,6 +31,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.battleLogService.clear();
+    this.battleService.clearService();
   }
 
   showLogToggle(): void {
@@ -59,9 +60,6 @@ export class ArenaComponent implements OnInit, OnDestroy {
   }
 
   endBattle(): void {
-    this.battleService.battleEnded.next('no');
-    this.battleService.readyForBattle.next('no');
-    this.battleService.readyForRound.next('no');
     this.router.navigate(['/dashboard']);
   }
 

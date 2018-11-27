@@ -10,7 +10,7 @@
         (click)="endBattle()"><strong>End Battle</strong>
 </button>
 <section class="arenaBody">
-  <app-hero-model [battleStarted]="battleStarted"></app-hero-model>
+  <app-hero-model [battleStarted]="battleStarted" [battleEnded]="battleEnded"></app-hero-model>
   <button *ngIf="!readyForBattle && !battleStarted"
           (click)="startBattle()"
           class="fightBtn" mat-fab
@@ -18,8 +18,8 @@
     <strong>FIGHT</strong>
   </button>
   <app-battle-log *ngIf="!showLog && battleStarted"></app-battle-log>
-  <app-hero-model [enemy]="true" [battleStarted]="battleStarted"></app-hero-model>
+  <app-hero-model [enemy]="true" [battleStarted]="battleStarted" [battleEnded]="battleEnded"></app-hero-model>
 </section>
 
-<mat-button-toggle class="showLogBTN" (click)="sheowLogToggle()">BattleLog</mat-button-toggle>
+<mat-button-toggle class="showLogBTN">BattleLog</mat-button-toggle>
 
