@@ -88,11 +88,11 @@ export class BattleService {
     this.blockedPoints = [];
     this.readyForRoundState();
     if (this.yourHeroHP.value <= 0 && this.enemyHeroHP.value <= 0) {
-      this.battleEnd('Draw');
+      this.battleEnd('$ Draw $');
     } else if (this.yourHeroHP.value <= 0 ) {
-      this.battleEnd('You Lose');
+      this.battleEnd('$ You Lose $');
     } else if (this.enemyHeroHP.value <= 0 ) {
-      this.battleEnd('You Win');
+      this.battleEnd('$ You Win $');
     }
   }
 
