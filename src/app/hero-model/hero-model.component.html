@@ -31,7 +31,7 @@
     <section class="heroModel" [style.transform]="enemy ? 'scale(-1,1)' : 'none'" >
       <img class="heroImg" matCardImageXLarge src="../../assets/hero.png" alt="Hero image">
       <button *ngFor="let heroPart of (!enemy ? heroParts :  enemyParts)"
-              [style.background-image]="heroPart.checkStatus ? (!enemy ? 'url(src/assets/block.png)' : 'url(src/assets/attack.png)') : 'none'"
+              [style.background-image]="heroPart.checkStatus ? (!enemy ? 'url(../../assets/block.png)' : 'url(../../assets/attack.png)') : 'none'"
               mat-mini-fab
               [disabled]="!battleEnded"
               class="heroBodyParts"
