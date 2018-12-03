@@ -7,7 +7,7 @@ export class InMemoryDataService implements InMemoryDbService {
 
   createDb() {
     const heroes = [
-      {id: 11, name: 'Lucky', strength: 12, dexterity: 12, constitution: 10, luck: 16},
+      {id: 11, name: 'Lucky', strength: 14, dexterity: 11, constitution: 10, luck: 15},
       {id: 12, name: 'Speedy', strength: 11, dexterity: 16, constitution: 12, luck: 11},
       {id: 13, name: 'Bull', strength: 16, dexterity: 10, constitution: 12, luck: 12},
       {id: 14, name: 'Tower', strength: 13, dexterity: 10, constitution: 17, luck: 10}
