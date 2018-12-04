@@ -45,9 +45,11 @@ export class HeroService {
   // }
 
   addHero(hero: Hero): Observable<Hero> {
-    return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-      catchError(this.handleError<Hero>('addHero'))
-    );
+    if ( hero.name.match(/^[a-zA-Z0-9_.-]*$/) ) {
+      return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
+        catchError(this.handleError<Hero>('addHero'))
+      );
+    }
   }
 
   deleteHero(hero: Hero | number): Observable<Hero> {

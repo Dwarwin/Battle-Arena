@@ -41,7 +41,7 @@ export class HeroDetailsComponent implements OnInit {
 
   saveNewName(name): void {
     this.heroService.getHeroes().subscribe(res => {
-      if (!res.find((_) => _.name.toLowerCase() === name.toLowerCase())) {
+      if (!res.find((_) => _.name.toLowerCase() === name.toLowerCase()) && this.hero.name.match(/^[a-zA-Z0-9_.-]*$/)) {
         this.changeName();
       }
     });
