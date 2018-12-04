@@ -1,7 +1,7 @@
 <section class="stats" *ngIf="hero">
 
   <h2>{{hero.name | uppercase}} Details</h2>
-  <section><span>id: </span>{{hero.id}}</section>
+  <div><span>id: </span>{{hero.id}}</div>
   <button mat-button (click)="changeName()">Change name</button>
 
   <section *ngIf="changeNameStatus">
@@ -56,8 +56,15 @@
       <span>{{ hero.luck }}</span>
     </label>
   </section>
-
+  <section class="heroStats">
+    <ul class="advancedStats">
+      <li>HP: {{ hero.constitution * 10 }}</li>
+      <li>Damage: {{ hero.strength | countAdvStats: 'damage' }}</li>
+      <li>Evade chance: {{ hero.dexterity | countAdvStats: 'evade' }}</li>
+      <li>Critical hit chance: {{ hero.luck | countAdvStats: 'critical' }}</li>
+    </ul>
+  </section>
 </section>
-<button mat-raised-button color="warn" (click)="goBack()">go back</button>
+<button mat-raised-button color="warn" (click)="goBack()">cancel</button>
 <button mat-raised-button color="primary" (click)="save()">save</button>
 
