@@ -30,7 +30,7 @@ export class HeroDetailsComponent implements OnInit {
 
   getErrorMessage() {
     return this.name.hasError('required') ? 'You must enter a value' :
-      this.name.hasError('name') ? 'Not a valid name' :
+      this.name.hasError('pattern') ? 'Not a valid name' :
         '';
   }
 
@@ -39,7 +39,6 @@ export class HeroDetailsComponent implements OnInit {
     this.heroService.getHero(id)
       .subscribe(hero => {
         this.hero = new Hero(hero);
-        console.log(this.hero);
       });
   }
 
@@ -47,12 +46,17 @@ export class HeroDetailsComponent implements OnInit {
     this.changeNameStatus = !this.changeNameStatus;
   }
 
-  saveNewName(name): void {
-    this.heroService.getHeroes().subscribe(res => {
-      if (!res.find((_) => _.name.toLowerCase() === name.toLowerCase())) {
-        this.changeName();
-      }
-    });
+  saveNewName(): void {
+    if (this.hero.name === this.name.value) {
+      this.changeName();
+    } else {
+      this.hero.name = this.name.value;
+      this.heroService.getHeroes().subscribe(res => {
+        if (!res.find((_) => _.name.toLowerCase() === this.hero.name.toLowerCase())) {
+          this.changeName();
+        }
+      });
+    }
   }
 
   goBack(): void {

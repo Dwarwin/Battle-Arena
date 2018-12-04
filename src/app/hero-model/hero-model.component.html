@@ -23,8 +23,8 @@
     mode="determinate"
     color="warn"
     [value]="currentHP + 1 / hero.heroHP * 100 || hero.heroHP"
-    [bufferValue]="hero.heroHP"
-  ></mat-progress-bar>
+    [bufferValue]="hero.heroHP">
+  </mat-progress-bar>
   <span>{{currentHP + "/" + hero.heroHP}}</span>
 
   <section class="hero" [style.flex-direction]="enemy ? 'row' : 'row-reverse'">

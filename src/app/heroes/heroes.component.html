@@ -1,9 +1,10 @@
 <h2>My Heroes</h2>
 <form>
   <mat-form-field class="example-full-width">
-    <input matInput #heroName placeholder="Create new Hero"/>
+    <input matInput [formControl]="name" #heroName placeholder="Create new Hero"/>
+    <mat-error *ngIf="name.invalid">{{ getErrorMessage() }}</mat-error>
   </mat-form-field>
-  <button mat-button (click)="add(heroName.value); heroName.value=''">
+  <button mat-button (click)="add(heroName.value)">
     add
   </button>
 </form>
