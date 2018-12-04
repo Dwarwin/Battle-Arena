@@ -6,7 +6,8 @@
 
   <section *ngIf="changeNameStatus">
     <mat-form-field>
-    <input matInput [(ngModel)]="hero.name" placeholder="New name">
+    <input matInput [(ngModel)]="hero.name" placeholder="New name" [formControl]="name" required>
+      <mat-error *ngIf="name.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" (click)="saveNewName(hero.name)">Save</button>
   </section>

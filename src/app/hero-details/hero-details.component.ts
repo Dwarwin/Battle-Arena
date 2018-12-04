@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { FormControl, Validators } from '@angular/forms';
 
 import { Hero } from '../hero';
 import { HeroService } from '../services/-hero.service';
@@ -15,6 +16,7 @@ export class HeroDetailsComponent implements OnInit {
 
   hero: Hero;
   changeNameStatus = false;
+  name = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]);
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +26,12 @@ export class HeroDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getHero();
+  }
+
+  getErrorMessage() {
+    return this.name.hasError('required') ? 'You must enter a value' :
+      this.name.hasError('name') ? 'Not a valid name' :
+        '';
   }
 
   getHero(): void {
@@ -41,7 +49,7 @@ export class HeroDetailsComponent implements OnInit {
 
   saveNewName(name): void {
     this.heroService.getHeroes().subscribe(res => {
-      if (!res.find((_) => _.name.toLowerCase() === name.toLowerCase()) && this.hero.name.match(/^[a-zA-Z0-9_.-]*$/)) {
+      if (!res.find((_) => _.name.toLowerCase() === name.toLowerCase())) {
         this.changeName();
       }
     });
