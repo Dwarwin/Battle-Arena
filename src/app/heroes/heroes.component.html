@@ -1,19 +1,33 @@
 <h2>My Heroes</h2>
 <form>
-  <mat-form-field class="example-full-width">
+  <mat-form-field>
     <input matInput [formControl]="name" #heroName placeholder="Create new Hero"/>
     <mat-error *ngIf="name.invalid">{{ getErrorMessage() }}</mat-error>
   </mat-form-field>
-  <button mat-button (click)="add(heroName.value)">
+  <button mat-button class="add" [disabled]="heroAdded" (click)="add(heroName.value)">
     add
   </button>
 </form>
 <mat-nav-list class="heroes">
   <mat-list-item *ngFor="let hero of heroes">
-    <button mat-raised-button color="primary" routerLink="/detail/{{hero.id}}">
+    <button mat-raised-button color="primary" routerLink="/detail/{{hero.id}}" (mouseover)="showDetails(hero.id)"
+            (mouseout)="showDetails(null)">
       {{hero.name}}
     </button>
     <button mat-mini-fab color="warn" class="delete" title="delete hero"
             (click)="delete(hero)">x</button>
+    <section class="stats" *ngIf="showDetail === hero.id">
+      <ul class="primaryStats">
+        <li>Strength: {{ hero.strength }}</li>
+        <li>Dexterity: {{ hero.dexterity }}</li>
+        <li>Constitution: {{ hero.constitution }}</li>
+        <li>Luck: {{ hero.luck }}</li>
+      </ul>
+      <ul class="advancedStats">
+        <li>Damage: {{ hero.strength | countAdvStats: 'damage' }}</li>
+        <li>Evade chance: {{ hero.dexterity | countAdvStats: 'evade' }}</li>
+        <li>Critical hit chance: {{ hero.luck | countAdvStats: 'critical' }}</li>
+      </ul>
+    </section>
   </mat-list-item>
 </mat-nav-list>
