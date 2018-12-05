@@ -4,6 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Hero } from '../hero';
 import { HeroService } from '../services/-hero.service';
 import { Router} from '@angular/router';
+import { ExistingNameValidator} from '../validators/existing-name';
 
 @Component({
   selector: 'app-heroes',
@@ -24,11 +25,12 @@ export class HeroesComponent implements OnInit {
 
   ngOnInit() {
     this.getHeroes();
-    this.name = new FormControl('', Validators.pattern(/^[a-zA-Z0-9_.-]*$/));
+    this.name = new FormControl('', Validators.pattern(/^[a-zA-Z0-9_.-]*$/), ExistingNameValidator.validate(this.heroService));
   }
 
   getErrorMessage() {
-    return this.name.hasError('pattern') ? 'Not a valid name' : '';
+    return this.name.hasError('pattern') ? 'Not a valid name' :
+      'Name has been already taken';
   }
 
   getHeroes(): void {

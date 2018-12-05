@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import {catchError, delay, map} from 'rxjs/operators';
 
 import { Hero } from '../hero';
 
@@ -32,6 +32,16 @@ export class HeroService {
     return this.http.get<Hero>(url).pipe(
       catchError(this.handleError<Hero>(`getHero id=${id}`))
     );
+  }
+
+  checkIfNameExist(name: string) {
+    return this.http
+      .get<Hero[]>(this.heroesUrl).pipe(
+      delay(1000),
+      map(res => res),
+      map(heroes => heroes.filter(hero => hero.name === name)),
+      map(heroes => !heroes.length)
+  );
   }
 
   // searchHeroes(term: string): Observable<Hero[]> {
