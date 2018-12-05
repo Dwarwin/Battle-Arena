@@ -5,6 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 
 import { Hero } from '../hero';
 import { HeroService } from '../services/-hero.service';
+import { ExistingNameValidator } from '../validators/existing-name';
 
 @Component({
   selector: 'app-hero-details',
@@ -16,7 +17,8 @@ export class HeroDetailsComponent implements OnInit {
 
   hero: Hero;
   changeNameStatus = false;
-  name = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]);
+  name = new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_.-]*$/)],
+    ExistingNameValidator.validate(this.heroService));
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +33,7 @@ export class HeroDetailsComponent implements OnInit {
   getErrorMessage() {
     return this.name.hasError('required') ? 'You must enter a value' :
       this.name.hasError('pattern') ? 'Not a valid name' :
-        '';
+        'Name has been already taken';
   }
 
   getHero(): void {

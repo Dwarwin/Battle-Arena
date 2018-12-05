@@ -16,7 +16,6 @@ export class HeroesComponent implements OnInit {
   heroes: Hero[];
   hero: Hero;
   name: FormControl;
-  heroAdded: boolean;
   showDetail: number;
 
   constructor(private heroService: HeroService,
@@ -39,10 +38,7 @@ export class HeroesComponent implements OnInit {
   }
 
   add(name: string): void {
-    this.heroAdded = true;
-    name = name.trim();
-    if (!name || this.heroes.find((_) => _.name.toLowerCase() === name.toLowerCase())) {
-      this.heroAdded = false;
+    if (!name) {
       return;
     }
     this.heroService.addHero({name} as Hero)

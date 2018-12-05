@@ -4,7 +4,7 @@
     <input matInput [formControl]="name" #heroName placeholder="Create new Hero"/>
     <mat-error *ngIf="name.invalid">{{ getErrorMessage() }}</mat-error>
   </mat-form-field>
-  <button mat-button class="add" [disabled]="heroAdded" (click)="add(heroName.value)">
+  <button mat-button class="add" [disabled]="name.invalid || name.pending" (click)="add(heroName.value)">
     add
   </button>
 </form>

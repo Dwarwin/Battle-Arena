@@ -10,7 +10,7 @@
            [formControl]="name">
       <mat-error *ngIf="name.invalid">{{ getErrorMessage() }}</mat-error>
     </mat-form-field>
-    <button [disabled]="name.invalid" mat-raised-button color="primary"
+    <button [disabled]="name.invalid || name.pending" mat-raised-button color="primary"
             (click)="saveNewName()">save</button>
   </section>
 
