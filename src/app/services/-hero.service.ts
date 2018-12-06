@@ -44,22 +44,10 @@ export class HeroService {
   );
   }
 
-  // searchHeroes(term: string): Observable<Hero[]> {
-  //   if (!term.trim()) {
-  //     // if not search term, return empty hero array.
-  //     return of([]);
-  //   }
-  //   return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-  //     catchError(this.handleError<Hero[]>('searchHeroes', []))
-  //   );
-  // }
-
   addHero(hero: Hero): Observable<Hero> {
-    if ( hero.name.match(/^[a-zA-Z0-9_.-]*$/) ) {
-      return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-        catchError(this.handleError<Hero>('addHero'))
-      );
-    }
+    return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
+      catchError(this.handleError<Hero>('addHero'))
+    );
   }
 
   deleteHero(hero: Hero | number): Observable<Hero> {
@@ -86,7 +74,7 @@ export class HeroService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      console.error(error); // log to console instead
+      console.error(error);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
