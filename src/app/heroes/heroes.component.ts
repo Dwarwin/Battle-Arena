@@ -5,15 +5,32 @@ import { Hero } from '../hero';
 import { HeroService } from '../services/-hero.service';
 import { Router} from '@angular/router';
 import { ExistingNameValidator} from '../validators/existing-name';
+import {animate, keyframes, query, stagger, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
-  styleUrls: ['./heroes.component.sass']
+  styleUrls: ['./heroes.component.sass'],
+  animations: [
+    trigger('listAnimation', [
+      transition('* => *', [
+
+        query(':enter', style({ opacity: 0 }), {optional: true}),
+
+        query(':enter', stagger('300ms', [
+          animate('1s ease-in', keyframes([
+            style({opacity: 0, transform: 'translateY(-75%)', offset: 0}),
+            style({opacity: .5, transform: 'translateY(35px)',  offset: 0.3}),
+            style({opacity: 1, transform: 'translateY(0)',     offset: 1.0}),
+          ]))]), {optional: true})
+      ])
+    ])
+
+  ]
 })
 export class HeroesComponent implements OnInit {
 
-  heroes: Hero[];
+  heroes: Hero[] = [];
   hero: Hero;
   name: FormControl;
   showDetail: number;

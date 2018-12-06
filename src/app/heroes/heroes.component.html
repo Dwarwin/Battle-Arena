@@ -9,7 +9,7 @@
     add
   </button>
 </form>
-<mat-nav-list class="heroes">
+<mat-nav-list class="heroes" [@listAnimation]="heroes.length">
   <mat-list-item *ngFor="let hero of heroes">
     <button mat-raised-button color="primary" routerLink="/detail/{{hero.id}}" (mouseover)="showDetails(hero.id)"
             (mouseout)="showDetails(null)">
