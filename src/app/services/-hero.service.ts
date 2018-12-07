@@ -39,7 +39,7 @@ export class HeroService {
       .get<Hero[]>(this.heroesUrl).pipe(
       delay(1000),
       map(res => res),
-      map(heroes => heroes.filter(hero => hero.name === name)),
+      map(heroes => heroes.filter(hero => hero.name.toLowerCase() === name.toLowerCase())),
       map(heroes => !heroes.length)
   );
   }
