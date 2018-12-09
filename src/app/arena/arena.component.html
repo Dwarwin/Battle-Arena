@@ -4,22 +4,28 @@
         [disabled]="readyForRound"
         (click)="dealDmg()"><strong>Start Round</strong>
 </button>
-<button mat-raised-button color="warn"
+<button mat-raised-button color="accent"
         class="roundBTN"
         *ngIf="!battleEnded"
         (click)="endBattle()"><strong>End Battle</strong>
 </button>
 <section class="arenaBody">
-  <app-hero-model [battleStarted]="battleStarted" [battleEnded]="battleEnded"></app-hero-model>
-  <button *ngIf="!readyForBattle && !battleStarted"
+  <app-hero-model [battleStarted]="battleStarted"
+                  [battleEnded]="battleEnded">
+  </app-hero-model>
+  <button *ngIf="!battleStarted"
+          [disabled]="readyForBattle"
           (click)="startBattle()"
           class="fightBtn" mat-fab
           color="warn">
     <strong>FIGHT</strong>
   </button>
   <app-battle-log *ngIf="!showLog && battleStarted"></app-battle-log>
-  <app-hero-model [enemy]="true" [battleStarted]="battleStarted" [battleEnded]="battleEnded"></app-hero-model>
+  <app-hero-model [enemy]="true"
+                  [battleStarted]="battleStarted"
+                  [battleEnded]="battleEnded">
+  </app-hero-model>
 </section>
 
-<mat-button-toggle class="showLogBTN">BattleLog</mat-button-toggle>
+<mat-button-toggle *ngIf="!showLog && battleStarted" class="showLogBTN">BattleLog</mat-button-toggle>
 

@@ -34,7 +34,7 @@
               [style.background-image]="heroPart.checkStatus ? (!enemy ? 'url(../../assets/block.png)' : 'url(../../assets/attack.png)') : 'none'"
               mat-mini-fab
               [disabled]="!battleEnded"
-              class="heroBodyParts"
+              [ngClass]="{'heroBodyParts': !enemy, 'enemyBodyParts': enemy}"
               [id]="!enemy ? heroPart.part : heroPart.part"
               (click)="choosePoint(heroPart)"></button>
     </section>

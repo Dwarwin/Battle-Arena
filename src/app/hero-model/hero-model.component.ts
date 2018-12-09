@@ -11,7 +11,7 @@ import { BattleService } from '../services/battle.service';
   styleUrls: ['./hero-model.component.sass']
 })
 
-export class HeroModelComponent implements OnInit  {
+export class HeroModelComponent implements OnInit {
 
   @Input() enemy: boolean;
   @Input() battleStarted: boolean;
@@ -25,9 +25,8 @@ export class HeroModelComponent implements OnInit  {
 
   constructor(
     private heroService: HeroService,
-    private battleService: BattleService,
-  ) {
-  }
+    private battleService: BattleService
+  ) {}
 
   ngOnInit() {
     this.heroService.getHeroes().subscribe(res => this.heroes = res);
