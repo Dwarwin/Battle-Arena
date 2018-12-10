@@ -2,7 +2,7 @@
         class="roundBTN"
         *ngIf="battleStarted && battleEnded"
         [disabled]="readyForRound"
-        (click)="dealDmg()"><strong>Start Round</strong>
+        (click)="dealDmg(); tabIndex = 2"><strong>Start Round</strong>
 </button>
 <button mat-raised-button color="accent"
         class="roundBTN"
@@ -38,7 +38,8 @@
   </app-hero-model>
 </section>
 
-<mat-tab-group class="arenaBody" *ngIf="isMobile && battleStarted">
+<mat-tab-group class="arenaBody" [selectedIndex]="tabIndex" (selectedIndexChange)="tabIndex = $event"
+               *ngIf="isMobile && battleStarted">
   <mat-tab label="Blocks">
     <app-hero-model
       *ngIf="battleStarted"

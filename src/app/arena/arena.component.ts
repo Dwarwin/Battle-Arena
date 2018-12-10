@@ -18,9 +18,12 @@ export class ArenaComponent implements OnInit, OnDestroy {
   battleStarted: boolean;
   readyForRound: boolean;
   battleEnded: boolean;
-  isMobile$: Observable<any>;
   isMobile: boolean;
+  tabIndex = 0;
+
+  isMobile$: Observable<boolean>;
   subscribes: Subscription[] = [];
+  isMobileState$: Subscription;
   readyForBattleState$: Subscription;
   readyForRoundState$: Subscription;
   endBattleState$: Subscription;
@@ -32,10 +35,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const checkScreenSize = () => document.body.offsetWidth < 900;
-    const screenSizeChanged$ = fromEvent(window, 'resize').pipe(debounceTime(500)).pipe(map(checkScreenSize));
-    this.isMobile$ = screenSizeChanged$.pipe(startWith(checkScreenSize()));
-    this.isMobile$.subscribe(val => this.isMobile = val);
+    this.checkIfMobile();
     this.readyForBattleState();
     this.readyForRoundState();
     this.endBattleState();
@@ -54,6 +54,14 @@ export class ArenaComponent implements OnInit, OnDestroy {
   // TODO delete when finish battle service
   dealDmg(): void {
     this.battleService.newRound();
+  }
+
+  checkIfMobile(): void {
+    const checkScreenSize = () => document.body.offsetWidth < 900;
+    const screenSizeChanged$ = fromEvent(window, 'resize').pipe(debounceTime(500)).pipe(map(checkScreenSize));
+    this.isMobile$ = screenSizeChanged$.pipe(startWith(checkScreenSize()));
+    this.isMobileState$ = this.isMobile$.subscribe(val => this.isMobile = val);
+    this.subscribes.push(this.isMobileState$);
   }
 
   readyForBattleState(): void {
