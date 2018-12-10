@@ -1,4 +1,4 @@
-<section *ngIf="!battleStarted">
+<section class="selectorBody" *ngIf="!battleStarted">
   <h4 *ngIf="!enemy; else enemyHero">Select your hero</h4>
   <ng-template #enemyHero>
     <h4>Select your enemy</h4>
@@ -10,6 +10,11 @@
         {{hero.name}}
       </mat-option>
     </mat-select>
-    <mat-hint *ngIf="selected">Hero id:{{selected.id}}</mat-hint>
+    <mat-hint *ngIf="selected">
+      HP: {{hero.constitution*10}}
+      DMG: {{hero.strength | countAdvStats: 'damage'}}
+      EVD: {{hero.dexterity | countAdvStats: 'evade'}}
+      CRIT: {{hero.luck | countAdvStats: 'critical'}}
+    </mat-hint>
   </mat-form-field>
 </section>

@@ -25,6 +25,7 @@
         <li>Luck: {{ hero.luck }}</li>
       </ul>
       <ul class="advancedStats">
+        <li>HP: {{ hero.constitution*10 }}</li>
         <li>Damage: {{ hero.strength | countAdvStats: 'damage' }}</li>
         <li>Evade chance: {{ hero.dexterity | countAdvStats: 'evade' }}</li>
         <li>Critical hit chance: {{ hero.luck | countAdvStats: 'critical' }}</li>
