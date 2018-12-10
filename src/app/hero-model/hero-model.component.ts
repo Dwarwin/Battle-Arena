@@ -16,12 +16,13 @@ export class HeroModelComponent implements OnInit {
   @Input() enemy: boolean;
   @Input() battleStarted: boolean;
   @Input() battleEnded: boolean;
-  heroes: Hero[];
   hero: Hero;
-  heroParts: Parts[] = HeroParts;
-  enemyParts: Parts[] = EnemyHeroParts;
+  heroes: Hero[];
   selected: Hero;
   currentHP: number;
+  heroParts: Parts[] = HeroParts;
+  enemyParts: Parts[] = EnemyHeroParts;
+
 
   constructor(
     private heroService: HeroService,

@@ -9,7 +9,7 @@
         *ngIf="!battleEnded"
         (click)="endBattle()"><strong>End Battle</strong>
 </button>
-<section class="arenaBody">
+<section class="arenaBody" *ngIf="!isMobile || !battleStarted">
   <app-hero-model [battleStarted]="battleStarted"
                   [battleEnded]="battleEnded">
   </app-hero-model>
@@ -26,6 +26,27 @@
                   [battleEnded]="battleEnded">
   </app-hero-model>
 </section>
+
+<mat-tab-group class="arenaBody" *ngIf="isMobile && battleStarted">
+  <mat-tab label="Blocks">
+    <app-hero-model
+      [hero]="yourHero"
+      [battleStarted]="battleStarted"
+      [battleEnded]="battleEnded">
+    </app-hero-model>
+  </mat-tab>
+  <mat-tab label="Attacks">
+    <app-hero-model
+      [hero]="enemyHero"
+      [enemy]="true"
+      [battleStarted]="battleStarted"
+      [battleEnded]="battleEnded">
+    </app-hero-model>
+  </mat-tab>
+  <mat-tab label="Result">
+    <app-battle-log *ngIf="!showLog && battleStarted"></app-battle-log>
+  </mat-tab>
+</mat-tab-group>
 
 <mat-button-toggle *ngIf="!showLog && battleStarted" class="showLogBTN">BattleLog</mat-button-toggle>
 

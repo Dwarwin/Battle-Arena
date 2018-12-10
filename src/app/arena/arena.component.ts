@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { BattleLogService } from '../services/battle-log.service';
 import { BattleService } from '../services/battle.service';
+import {debounceTime, startWith, map} from 'rxjs/operators';
+import {fromEvent, Observable} from 'rxjs';
 
 @Component({
   selector: 'app-arena',
@@ -16,6 +18,8 @@ export class ArenaComponent implements OnInit, OnDestroy {
   battleStarted: boolean;
   readyForRound: boolean;
   battleEnded: boolean;
+  isMobile$: Observable<any>;
+  isMobile: boolean;
 
   constructor(
     public battleLogService: BattleLogService,
@@ -24,6 +28,10 @@ export class ArenaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const checkScreenSize = () => document.body.offsetWidth < 900;
+    const screenSizeChanged$ = fromEvent(window, 'resize').pipe(debounceTime(500)).pipe(map(checkScreenSize));
+    this.isMobile$ = screenSizeChanged$.pipe(startWith(checkScreenSize()));
+    this.isMobile$.subscribe(val => this.isMobile = val);
     this.readyForBattleState();
     this.readyForRoundState();
     this.endBattleState();
