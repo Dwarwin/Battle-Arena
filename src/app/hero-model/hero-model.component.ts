@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 
 import { Hero } from '../hero';
 import { HeroParts, EnemyHeroParts, Parts } from '../heroParts';
-import { HeroService} from '../services/-hero.service';
 import { BattleService } from '../services/battle.service';
 
 @Component({
@@ -14,39 +13,24 @@ import { BattleService } from '../services/battle.service';
 export class HeroModelComponent implements OnInit {
 
   @Input() enemy: boolean;
-  @Input() battleStarted: boolean;
   @Input() battleEnded: boolean;
   hero: Hero;
-  heroes: Hero[];
-  selected: Hero;
   currentHP: number;
   heroParts: Parts[] = HeroParts;
   enemyParts: Parts[] = EnemyHeroParts;
 
-
-  constructor(
-    private heroService: HeroService,
-    private battleService: BattleService
-  ) {}
+  constructor( private battleService: BattleService ) {}
 
   ngOnInit() {
-    this.heroService.getHeroes().subscribe(res => this.heroes = res);
+    const heroSide = !this.enemy ? this.battleService.setYourHero$ : this.battleService.setEnemyHero$;
+    heroSide.subscribe(val => this.hero = val);
     this.getCurrentHP();
-  }
-
-  getHero(): void {
-    const id = this.selected.id;
-    this.heroService.getHero(id)
-      .subscribe(hero => {
-        this.hero = new Hero(hero);
-        this.battleService.getHero(this.hero, this.enemy);
-      });
   }
 
   getCurrentHP(): void {
     this.enemy
-      ? this.battleService.enemyHeroHP.subscribe(hp => this.currentHP = hp)
-      : this.battleService.yourHeroHP.subscribe(hp => this.currentHP = hp);
+      ? this.battleService.enemyHeroHP$.subscribe(hp => this.currentHP = hp)
+      : this.battleService.yourHeroHP$.subscribe(hp => this.currentHP = hp);
   }
 
   choosePoint(point: Parts): void {

@@ -27,6 +27,16 @@ export class BattleService {
   readyForBattle = new BehaviorSubject<string>('no');
   readyForRound = new BehaviorSubject<string>('no');
   battleEnded = new BehaviorSubject<string>('no');
+  setYourHero = new BehaviorSubject<Hero>(this.yourHero);
+  setEnemyHero = new BehaviorSubject<Hero>(this.enemyHero);
+
+  yourHeroHP$ = this.yourHeroHP.asObservable();
+  enemyHeroHP$ = this.enemyHeroHP.asObservable();
+  readyForBattle$ = this.readyForBattle.asObservable();
+  readyForRound$ = this.readyForRound.asObservable();
+  battleEnded$ = this.battleEnded.asObservable();
+  setYourHero$ = this.setYourHero.asObservable();
+  setEnemyHero$ = this.setEnemyHero.asObservable();
 
   static shufflePoints(arr: Parts[]): Parts[] {
     const newArr: Parts[] = [];
@@ -45,6 +55,7 @@ export class BattleService {
     enemy ? this.enemyHero = hero : this.yourHero = hero;
     this.changeHeroHp(hero.heroHP, enemy);
     this.readyForBattle.next(this.yourHero && this.enemyHero ? 'yes' : 'no');
+    !enemy ? this.setYourHero.next(this.yourHero) : this.setEnemyHero.next(this.enemyHero);
   }
 
   changeHeroHp(hp: number, enemy: boolean) {

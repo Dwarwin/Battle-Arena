@@ -17,6 +17,7 @@ import { BattleLogComponent } from './battle-log/battle-log.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material';
 import { CountAdvStatsPipe } from './pipes/count-adv-stats.pipe';
+import { HeroSelectorComponent } from './hero-selector/hero-selector.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CountAdvStatsPipe } from './pipes/count-adv-stats.pipe';
     HeroesComponent,
     HeroModelComponent,
     BattleLogComponent,
-    CountAdvStatsPipe
+    CountAdvStatsPipe,
+    HeroSelectorComponent
   ],
   imports: [
     BrowserModule,

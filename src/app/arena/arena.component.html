@@ -10,36 +10,45 @@
         (click)="endBattle()"><strong>End Battle</strong>
 </button>
 <section class="arenaBody" *ngIf="!isMobile || !battleStarted">
-  <app-hero-model [battleStarted]="battleStarted"
-                  [battleEnded]="battleEnded">
+<app-hero-selector
+  [battleStarted]="battleStarted">
+</app-hero-selector>
+<button *ngIf="!battleStarted"
+        [disabled]="readyForBattle"
+        (click)="startBattle()"
+        class="fightBtn" mat-fab
+        color="warn">
+  <strong>FIGHT</strong>
+</button>
+<app-hero-selector
+  [enemy]="true"
+  [battleStarted]="battleStarted">
+</app-hero-selector>
+</section>
+<section class="arenaBody" *ngIf="!isMobile || !battleStarted">
+  <app-hero-model
+    *ngIf="battleStarted"
+    [battleEnded]="battleEnded">
   </app-hero-model>
-  <button *ngIf="!battleStarted"
-          [disabled]="readyForBattle"
-          (click)="startBattle()"
-          class="fightBtn" mat-fab
-          color="warn">
-    <strong>FIGHT</strong>
-  </button>
   <app-battle-log *ngIf="!showLog && battleStarted"></app-battle-log>
-  <app-hero-model [enemy]="true"
-                  [battleStarted]="battleStarted"
-                  [battleEnded]="battleEnded">
+  <app-hero-model
+    *ngIf="battleStarted"
+    [enemy]="true"
+    [battleEnded]="battleEnded">
   </app-hero-model>
 </section>
 
 <mat-tab-group class="arenaBody" *ngIf="isMobile && battleStarted">
   <mat-tab label="Blocks">
     <app-hero-model
-      [hero]="yourHero"
-      [battleStarted]="battleStarted"
+      *ngIf="battleStarted"
       [battleEnded]="battleEnded">
     </app-hero-model>
   </mat-tab>
   <mat-tab label="Attacks">
     <app-hero-model
-      [hero]="enemyHero"
+      *ngIf="battleStarted"
       [enemy]="true"
-      [battleStarted]="battleStarted"
       [battleEnded]="battleEnded">
     </app-hero-model>
   </mat-tab>
