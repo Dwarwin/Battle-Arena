@@ -1,0 +1,15 @@
+<section *ngIf="!battleStarted">
+  <h4 *ngIf="!enemy; else enemyHero">Select your hero</h4>
+  <ng-template #enemyHero>
+    <h4>Select your enemy</h4>
+  </ng-template>
+  <mat-form-field>
+    <mat-select (selectionChange)="getHero()" [placeholder]="!enemy ? 'Choose your hero' : 'Choose your enemy'"
+                [(ngModel)]="selected">
+      <mat-option *ngFor="let hero of heroes" [value]="hero">
+        {{hero.name}}
+      </mat-option>
+    </mat-select>
+    <mat-hint *ngIf="selected">Hero id:{{selected.id}}</mat-hint>
+  </mat-form-field>
+</section>
