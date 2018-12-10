@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BattleLogService } from '../services/battle-log.service';
 import { BattleService } from '../services/battle.service';
 import {debounceTime, startWith, map} from 'rxjs/operators';
-import {fromEvent, Observable} from 'rxjs';
+import {fromEvent, Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-arena',
@@ -20,6 +20,10 @@ export class ArenaComponent implements OnInit, OnDestroy {
   battleEnded: boolean;
   isMobile$: Observable<any>;
   isMobile: boolean;
+  subscribes: Subscription[] = [];
+  readyForBattleState$: Subscription;
+  readyForRoundState$: Subscription;
+  endBattleState$: Subscription;
 
   constructor(
     public battleLogService: BattleLogService,
@@ -40,6 +44,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.battleLogService.clear();
     this.battleService.clearService();
+    this.subscribes.forEach(val => val.unsubscribe());
   }
 
   showLogToggle(): void {
@@ -52,15 +57,21 @@ export class ArenaComponent implements OnInit, OnDestroy {
   }
 
   readyForBattleState(): void {
-    this.battleService.readyForBattle$.subscribe(val => val !== 'yes' ? this.readyForBattle = true : this.readyForBattle = false);
+    this.readyForBattleState$ = this.battleService.readyForBattle$
+      .subscribe(val => val !== 'yes' ? this.readyForBattle = true : this.readyForBattle = false);
+    this.subscribes.push(this.readyForBattleState$);
   }
 
   readyForRoundState(): void {
-    this.battleService.readyForRound$.subscribe(val => val !== 'yes' ? this.readyForRound = true : this.readyForRound = false);
+    this.readyForRoundState$ = this.battleService.readyForRound$
+      .subscribe(val => val !== 'yes' ? this.readyForRound = true : this.readyForRound = false);
+    this.subscribes.push(this.readyForRoundState$);
   }
 
   endBattleState(): void {
-    this.battleService.battleEnded$.subscribe(val => val !== 'yes' ? this.battleEnded = true : this.battleEnded = false);
+    this.endBattleState$ = this.battleService.battleEnded$
+      .subscribe(val => val !== 'yes' ? this.battleEnded = true : this.battleEnded = false);
+    this.subscribes.push(this.endBattleState$);
   }
 
   startBattle(): void  {
