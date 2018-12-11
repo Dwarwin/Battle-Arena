@@ -9,7 +9,7 @@
         *ngIf="!battleEnded"
         (click)="endBattle()"><strong>End Battle</strong>
 </button>
-<section class="arenaBody" *ngIf="!isMobile || !battleStarted">
+<section class="arenaBody" *ngIf="!battleStarted">
   <app-hero-selector
     [battleStarted]="battleStarted">
   </app-hero-selector>
