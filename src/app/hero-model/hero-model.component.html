@@ -35,5 +35,10 @@
         <li>Critical hit chance: {{ hero.criticalHitChance + "%" }}</li>
       </ul>
     </section>
+    <p class="miniStats" *ngIf="hero">
+      Damage: {{hero.strength | countAdvStats: 'damage'}} |
+      Evade: {{hero.dexterity | countAdvStats: 'evade'}} |
+      Critical: {{hero.luck | countAdvStats: 'critical'}}
+    </p>
   </section>
 </section>
