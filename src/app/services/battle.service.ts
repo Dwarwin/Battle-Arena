@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 import { Hero } from '../hero';
 import { HeroParts, EnemyHeroParts, Parts } from '../heroParts';
 import { BattleLogService } from './battle-log.service';
+import { BattleResultDialogComponent } from '../battle-result-dialog/battle-result-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,10 @@ import { BattleLogService } from './battle-log.service';
 
 export class BattleService {
 
+  battleResultDialogRef: MatDialogRef<BattleResultDialogComponent>;
+
   constructor(
+    private dialog: MatDialog,
     public battleLogService: BattleLogService
   ) { }
 
@@ -99,17 +104,17 @@ export class BattleService {
     this.blockedPoints = [];
     this.readyForRoundState();
     if (this.yourHeroHP.value <= 0 && this.enemyHeroHP.value <= 0) {
-      this.battleEnd('$ Draw $');
+      this.battleEnd('Draw');
     } else if (this.yourHeroHP.value <= 0 ) {
-      this.battleEnd('$ You Lose $');
+      this.battleEnd('You Lose');
     } else if (this.enemyHeroHP.value <= 0 ) {
-      this.battleEnd('$ You Win $');
+      this.battleEnd('You Win');
     }
   }
 
   battleEnd(result: string): void {
     this.battleEnded.next('yes');
-    this.log(result);
+    this.battleResultDialogRef = this.dialog.open(BattleResultDialogComponent, {data: result});
     delete this.yourHero;
     delete this.enemyHero;
   }

@@ -18,6 +18,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material';
 import { CountAdvStatsPipe } from './pipes/count-adv-stats.pipe';
 import { HeroSelectorComponent } from './hero-selector/hero-selector.component';
+import { BattleResultDialogComponent } from './battle-result-dialog/battle-result-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HeroSelectorComponent } from './hero-selector/hero-selector.component';
     HeroModelComponent,
     BattleLogComponent,
     CountAdvStatsPipe,
-    HeroSelectorComponent
+    HeroSelectorComponent,
+    BattleResultDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +50,7 @@ import { HeroSelectorComponent } from './hero-selector/hero-selector.component';
     )
   ],
   providers: [],
+  entryComponents: [BattleResultDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

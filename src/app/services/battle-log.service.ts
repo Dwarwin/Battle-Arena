@@ -14,7 +14,6 @@ export class BattleLogService {
 
   addToLog (round: string[]): void {
     round.forEach(el => this.battleLog.push(el));
-    console.log(this.battleLog);
   }
 
   clear(): void {

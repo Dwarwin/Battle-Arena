@@ -1,0 +1,6 @@
+<h1 mat-dialog-title
+  [ngStyle]="{'color': resultColor}">
+  {{title}}</h1>
+<mat-dialog-actions>
+  <button mat-button (click)="close()">{{title === "You Win" ? 'Yey!' : 'Okay :('}}</button>
+</mat-dialog-actions>
