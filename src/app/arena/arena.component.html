@@ -73,4 +73,4 @@
 
 <mat-button-toggle *ngIf="battleStarted && !isMobile" (click)="showLogToggle()"
                    class="showLogBTN">{{!showLog ? 'Show battle log' : 'Show round result'}}</mat-button-toggle>
-<app-battle-log *ngIf="showLog && battleStarted"></app-battle-log>
+<app-battle-log *ngIf="showLog && battleStarted && tabIndex === 2"></app-battle-log>

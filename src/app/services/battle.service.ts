@@ -14,6 +14,7 @@ import { BattleResultDialogComponent } from '../battle-result-dialog/battle-resu
 export class BattleService {
 
   battleResultDialogRef: MatDialogRef<BattleResultDialogComponent>;
+  round = 0;
 
   constructor(
     private dialog: MatDialog,
@@ -98,6 +99,7 @@ export class BattleService {
     const enemyBlocks: Parts[] = BattleService.shufflePoints(this.enemyParts);
 
     this.battleLogService.clear();
+    this.round ++;
     this.attackResult(this.attackedPoints, enemyBlocks, this.yourHero, this.enemyHero, false);
     this.attackResult(enemyAttacks, this.blockedPoints, this.enemyHero, this.yourHero, true);
     this.attackedPoints = [];
@@ -120,7 +122,7 @@ export class BattleService {
   attackResult(attacked: Parts[], blocked: Parts[], hero: Hero, enemyHero: Hero, enemy: boolean): void {
     let notBlocked: Parts[] = attacked;
 
-    this.log(!enemy ? '----Your turn----' : '----' + this.enemyHero.name + '`s turn----');
+    this.log(!enemy ? `ROUND ${this.round}` : `\n`);
     attacked.forEach((_) => { _.checkStatus = false; });
     blocked.forEach(elem => {
       elem.checkStatus = false;
@@ -156,7 +158,7 @@ export class BattleService {
   }
 
   log(message: string) {
-    this.battleLogService.add(`${message}`);
+    this.battleLogService.add(message);
   }
 
   clearService(): void {
@@ -168,6 +170,7 @@ export class BattleService {
     this.attackedPoints = [];
     this.blockedPoints = [];
     this.battleLogService.clearLog();
+    this.round = 0;
     delete this.yourHero;
     delete this.enemyHero;
   }
@@ -184,6 +187,7 @@ export class BattleService {
     this.enemyHeroHP.next(this.enemyHero.heroHP);
     this.battleLogService.clearLog();
     this.battleLogService.clear();
+    this.round = 0;
   }
 
 }

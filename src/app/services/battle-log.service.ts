@@ -10,14 +10,10 @@ export class BattleLogService {
 
   add (massage: string): void {
     this.roundLog.push(massage);
-  }
-
-  addToLog (round: string[]): void {
-    round.forEach(el => this.battleLog.push(el));
+    this.battleLog.push(massage);
   }
 
   clear(): void {
-    this.addToLog(this.roundLog);
     this.roundLog = [];
   }
 
