@@ -129,7 +129,7 @@ export class BattleService {
         this.log(
           !enemy
             ? 'Your attack was blocked'
-            : 'You have successfully blocked ' + this.enemyHero.name + '`s attack');
+            : `You have successfully blocked ${this.enemyHero.name}\`s attack`);
         notBlocked = attacked;
       }
     });
@@ -137,20 +137,20 @@ export class BattleService {
     notBlocked.forEach(() => {
       const currentHp: number = enemy ? this.yourHeroHP.value : this.enemyHeroHP.value;
       let damage: number;
-      let critical = false;
+      let critical: boolean;
 
       if (Math.round(Math.random() * 100) <= enemyHero.evadeChance) {
         this.log(
           !enemy
-            ? enemyHero.name + ' has evaded your attack' : 'You have successfully evaded ' + this.enemyHero.name + '`s attack');
+            ? `${enemyHero.name} has evaded your attack` : `You have successfully evaded ${this.enemyHero.name}\`s attack`);
       } else {
         critical = Math.round(Math.random() * 100) <= hero.criticalHitChance;
         damage = hero.heroDamage * (critical ? 2 : 1);
         this.changeHeroHp(currentHp - damage, !enemy);
         this.log(
           !enemy
-            ? 'You dealt ' + damage + ' damage to ' + this.enemyHero.name + (critical ? '. Critical hit!' : '.')
-            : this.enemyHero.name + ' dealt you ' + damage + ' damage' + (critical ? '. Critical hit!' : '.'));
+            ? `You dealt ${damage} damage to ${this.enemyHero.name}${critical ? '. Critical hit!' : '.'}`
+            : `${this.enemyHero.name} dealt you ${damage} damage${critical ? '. Critical hit!' : '.'}`);
       }
     });
   }
