@@ -115,8 +115,6 @@ export class BattleService {
   battleEnd(result: string): void {
     this.battleEnded.next('yes');
     this.battleResultDialogRef = this.dialog.open(BattleResultDialogComponent, {data: result});
-    delete this.yourHero;
-    delete this.enemyHero;
   }
 
   attackResult(attacked: Parts[], blocked: Parts[], hero: Hero, enemyHero: Hero, enemy: boolean): void {
@@ -172,6 +170,20 @@ export class BattleService {
     this.battleLogService.clearLog();
     delete this.yourHero;
     delete this.enemyHero;
+  }
+
+  tryAgain(): void {
+    this.readyForBattle.next('yes');
+    this.battleEnded.next('no');
+    this.readyForRound.next('no');
+    this.attackedPoints.forEach((elem) => elem.checkStatus = false);
+    this.blockedPoints.forEach((elem) => elem.checkStatus = false);
+    this.attackedPoints = [];
+    this.blockedPoints = [];
+    this.yourHeroHP.next(this.yourHero.heroHP);
+    this.enemyHeroHP.next(this.enemyHero.heroHP);
+    this.battleLogService.clearLog();
+    this.battleLogService.clear();
   }
 
 }

@@ -91,4 +91,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
     this.router.navigate(['/dashboard']);
   }
 
+  tryAgain(): void {
+    this.battleService.tryAgain();
+  }
 }

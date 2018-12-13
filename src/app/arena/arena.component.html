@@ -4,11 +4,22 @@
         [disabled]="readyForRound"
         (click)="dealDmg(); tabIndex = 2"><strong>Start Round</strong>
 </button>
-<button mat-raised-button color="accent"
-        class="roundBTN"
-        *ngIf="!battleEnded"
-        (click)="endBattle()"><strong>End Battle</strong>
-</button>
+<section class="btnGroup">
+  <div>
+    <button mat-raised-button color="accent"
+            class="endBTN"
+            *ngIf="!battleEnded"
+            (click)="endBattle()"><strong>End Battle</strong>
+    </button>
+  </div>
+  <div>
+    <button mat-raised-button color="warn"
+            class="endBTN"
+            *ngIf="!battleEnded"
+            (click)="tryAgain()"><strong>Try Again</strong>
+    </button>
+  </div>
+</section>
 <section class="arenaBody" *ngIf="!battleStarted">
   <app-hero-selector
     [battleStarted]="battleStarted">
