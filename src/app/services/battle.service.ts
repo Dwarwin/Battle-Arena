@@ -164,6 +164,7 @@ export class BattleService {
     this.blockedPoints.forEach((elem) => elem.checkStatus = false);
     this.attackedPoints = [];
     this.blockedPoints = [];
+    this.battleLogService.clearLog();
     delete this.yourHero;
     delete this.enemyHero;
   }

@@ -19,7 +19,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
   readyForRound: boolean;
   battleEnded: boolean;
   isMobile: boolean;
-  tabIndex = 0;
+  tabIndex = 3;
 
   isMobile$: Observable<boolean>;
   subscribes: Subscription[] = [];
@@ -54,6 +54,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
   // TODO delete when finish battle service
   dealDmg(): void {
     this.battleService.newRound();
+    this.showLog = false;
   }
 
   checkIfMobile(): void {

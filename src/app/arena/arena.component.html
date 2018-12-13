@@ -30,7 +30,7 @@
     *ngIf="battleStarted"
     [battleEnded]="battleEnded">
   </app-hero-model>
-  <app-battle-log *ngIf="!showLog && battleStarted"></app-battle-log>
+  <app-battle-log *ngIf="battleStarted" [round]="true"></app-battle-log>
   <app-hero-model
     *ngIf="battleStarted"
     [enemy]="true"
@@ -54,9 +54,12 @@
     </app-hero-model>
   </mat-tab>
   <mat-tab label="Result">
-    <app-battle-log *ngIf="!showLog && battleStarted"></app-battle-log>
-    <mat-button-toggle *ngIf="!showLog && battleStarted && isMobile" class="showLogBTN">BattleLog</mat-button-toggle>
+    <app-battle-log *ngIf="!showLog && battleStarted" [round]="true"></app-battle-log>
+    <mat-button-toggle *ngIf="battleStarted && tabIndex === 2" (click)="showLogToggle()"
+                       class="showLogBTN">{{!showLog ? 'Show battle log' : 'Show round result'}}</mat-button-toggle>
   </mat-tab>
 </mat-tab-group>
 
-<mat-button-toggle *ngIf="!showLog && battleStarted && !isMobile" class="showLogBTN">BattleLog</mat-button-toggle>
+<mat-button-toggle *ngIf="battleStarted && !isMobile" (click)="showLogToggle()"
+                   class="showLogBTN">{{!showLog ? 'Show battle log' : 'Show round result'}}</mat-button-toggle>
+<app-battle-log *ngIf="showLog && battleStarted"></app-battle-log>

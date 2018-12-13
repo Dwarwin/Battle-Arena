@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { BattleLogService } from '../services/battle-log.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { BattleLogService } from '../services/battle-log.service';
   styleUrls: ['./battle-log.component.sass']
 })
 export class BattleLogComponent implements OnInit {
+
+  @Input() round: boolean;
 
   constructor(
     public battleLogService: BattleLogService) { }
