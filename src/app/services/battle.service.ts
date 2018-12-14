@@ -25,9 +25,9 @@ export class BattleService {
   enemyHero: Hero;
   heroParts: Parts[] = HeroParts.map(obj => obj);
   enemyParts: Parts[] = EnemyHeroParts.map(obj => obj);
-  attackedPoints: Parts[] = [];
-  blockedPoints: Parts[] = [];
 
+  attackedPoints = new BehaviorSubject<Parts[]>([]);
+  blockedPoints = new BehaviorSubject<Parts[]>([]);
   yourHeroHP = new BehaviorSubject<number>(100);
   enemyHeroHP = new BehaviorSubject<number>(100);
   readyForBattle = new BehaviorSubject<string>('no');
@@ -43,6 +43,8 @@ export class BattleService {
   battleEnded$ = this.battleEnded.asObservable();
   setYourHero$ = this.setYourHero.asObservable();
   setEnemyHero$ = this.setEnemyHero.asObservable();
+  attackedPoints$ = this.attackedPoints.asObservable();
+  blockedPoints$ = this.blockedPoints.asObservable();
 
   static shufflePoints(arr: Parts[]): Parts[] {
     const newArr: Parts[] = [];
@@ -74,21 +76,23 @@ export class BattleService {
   }
 
   readyForRoundState(): void {
-    const readyState = this.attackedPoints.length === 2 && this.blockedPoints.length;
+    const readyState = this.attackedPoints.value.length === 2 && this.blockedPoints.value.length;
     this.readyForRound.next(readyState === 2 ? 'yes' : 'no');
   }
 
   selectedPoints(point: Parts, enemy: boolean): void {
     const selectedPoints = (enemy ? this.attackedPoints : this.blockedPoints);
-    if (selectedPoints.indexOf(point) === -1) {
-      if (selectedPoints.length <= 1) {
-        selectedPoints.push(point);
+    const selectedPointsVal = (enemy ? this.attackedPoints.value : this.blockedPoints.value);
+    if (selectedPointsVal.indexOf(point) === -1) {
+      if (selectedPointsVal.length <= 1) {
+        selectedPoints.value.push(point);
+        selectedPoints.next(selectedPoints.value);
         point.checkStatus = true;
       }
     } else {
       enemy
-        ? this.attackedPoints = selectedPoints.filter(_ => _ !== point)
-        : this.blockedPoints = selectedPoints.filter(_ => _ !== point);
+        ? this.attackedPoints.next(selectedPointsVal.filter(_ => _ !== point))
+        : this.blockedPoints.next(selectedPointsVal.filter(_ => _ !== point));
       point.checkStatus = false;
     }
     this.readyForRoundState();
@@ -100,10 +104,10 @@ export class BattleService {
 
     this.battleLogService.clear();
     this.round ++;
-    this.attackResult(this.attackedPoints, enemyBlocks, this.yourHero, this.enemyHero, false);
-    this.attackResult(enemyAttacks, this.blockedPoints, this.enemyHero, this.yourHero, true);
-    this.attackedPoints = [];
-    this.blockedPoints = [];
+    this.attackResult(this.attackedPoints.value, enemyBlocks, this.yourHero, this.enemyHero, false);
+    this.attackResult(enemyAttacks, this.blockedPoints.value, this.enemyHero, this.yourHero, true);
+    this.attackedPoints.next([]);
+    this.blockedPoints.next([]);
     this.readyForRoundState();
     if (this.yourHeroHP.value <= 0 && this.enemyHeroHP.value <= 0) {
       this.battleEnd('Draw');
@@ -165,10 +169,10 @@ export class BattleService {
     this.battleEnded.next('no');
     this.readyForBattle.next('no');
     this.readyForRound.next('no');
-    this.attackedPoints.forEach((elem) => elem.checkStatus = false);
-    this.blockedPoints.forEach((elem) => elem.checkStatus = false);
-    this.attackedPoints = [];
-    this.blockedPoints = [];
+    this.attackedPoints.value.forEach((elem) => elem.checkStatus = false);
+    this.blockedPoints.value.forEach((elem) => elem.checkStatus = false);
+    this.attackedPoints.next([]);
+    this.blockedPoints.next([]);
     this.battleLogService.clearLog();
     this.round = 0;
     delete this.yourHero;
@@ -179,10 +183,10 @@ export class BattleService {
     this.readyForBattle.next('yes');
     this.battleEnded.next('no');
     this.readyForRound.next('no');
-    this.attackedPoints.forEach((elem) => elem.checkStatus = false);
-    this.blockedPoints.forEach((elem) => elem.checkStatus = false);
-    this.attackedPoints = [];
-    this.blockedPoints = [];
+    this.attackedPoints.value.forEach((elem) => elem.checkStatus = false);
+    this.blockedPoints.value.forEach((elem) => elem.checkStatus = false);
+    this.attackedPoints.next([]);
+    this.blockedPoints.next([]);
     this.yourHeroHP.next(this.yourHero.heroHP);
     this.enemyHeroHP.next(this.enemyHero.heroHP);
     this.battleLogService.clearLog();

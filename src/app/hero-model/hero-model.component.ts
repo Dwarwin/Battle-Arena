@@ -3,6 +3,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { Hero } from '../hero';
 import { HeroParts, EnemyHeroParts, Parts } from '../heroParts';
 import { BattleService } from '../services/battle.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-hero-model',
@@ -18,12 +19,19 @@ export class HeroModelComponent implements OnInit {
   currentHP: number;
   heroParts: Parts[] = HeroParts;
   enemyParts: Parts[] = EnemyHeroParts;
+  heroParts$: Subscription;
+  enemyParts$: Subscription;
+  partsSelected: boolean;
 
   constructor( private battleService: BattleService ) {}
 
   ngOnInit() {
     const heroSide = !this.enemy ? this.battleService.setYourHero$ : this.battleService.setEnemyHero$;
     heroSide.subscribe(val => this.hero = val);
+    !this.enemy ? this.heroParts$ = this.battleService.blockedPoints
+        .subscribe(el => el.length < 2 ? this.partsSelected = false : this.partsSelected = true)
+      : this.enemyParts$ = this.battleService.attackedPoints
+        .subscribe(el => el.length < 2 ? this.partsSelected = false : this.partsSelected = true);
     this.getCurrentHP();
   }
 
