@@ -20,7 +20,7 @@
               [disabled]="!battleEnded"
               [ngClass]="{'heroBodyParts': !enemy,
               'enemyBodyParts': enemy,
-              'partsSelected': partsSelected,
+              'partsSelected': partsSelected || !battleEnded,
               'blockSelected': heroPart.checkStatus && !enemy,
               'attackSelected': heroPart.checkStatus && enemy}"
               [id]="!enemy ? heroPart.part : heroPart.part"

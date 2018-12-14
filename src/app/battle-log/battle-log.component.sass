@@ -1,13 +1,22 @@
-.battleLog
+%flexColumnCenter
   display: flex
   flex-direction: column
   text-align: center
   justify-content: center
-  min-width: 300px
-  margin: 15px
+  margin: 15px auto
+
+.roundLog
+  @extend %flexColumnCenter
+  width: 280px
+  height: calc(100% - 80px)
+  margin: 15px auto
 
   .message
     margin: 10px
+
+.battleLog
+  @extend %flexColumnCenter
+  margin: 15px auto
 
   .log
     margin: 5px

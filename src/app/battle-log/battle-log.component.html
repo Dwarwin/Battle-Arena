@@ -1,13 +1,12 @@
-<section *ngIf="battleLogService.battleLog.length > -1" class="battleLog">
-  <div *ngIf="!round; else roundBlock">
-    <p class="log" *ngFor="let message of battleLogService.battleLog">
-      {{message}}
-    </p>
+<section *ngIf="round" class="roundLog">
+  <div *ngIf="!battleLogService.roundLog.length" class="message">Select 2 attack and 2 block points</div>
+  <div class="message" *ngFor="let message of battleLogService.roundLog">
+    {{message}}
   </div>
-  <ng-template #roundBlock>
-    <div *ngIf="!battleLogService.roundLog.length" class="message">Select 2 attack and 2 block points</div>
-    <div class="message" *ngFor="let message of battleLogService.roundLog">
-      {{message}}
-    </div>
-  </ng-template>
+</section>
+
+<section *ngIf="!round" class="battleLog">
+  <p class="log" *ngFor="let message of battleLogService.battleLog">
+    {{message}}
+  </p>
 </section>

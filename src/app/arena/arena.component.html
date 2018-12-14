@@ -20,17 +20,19 @@
     </button>
   </div>
 </section>
-<section class="arenaBody" *ngIf="!battleStarted">
+<section class="heroSelector" *ngIf="!battleStarted">
   <app-hero-selector
     [battleStarted]="battleStarted">
   </app-hero-selector>
-  <button *ngIf="!battleStarted"
-          [disabled]="readyForBattle"
-          (click)="startBattle()"
-          class="fightBtn" mat-fab
-          color="warn">
-    <strong>FIGHT</strong>
-  </button>
+  <div>
+    <button *ngIf="!battleStarted"
+            [disabled]="readyForBattle"
+            (click)="startBattle()"
+            class="fightBtn" mat-fab
+            color="warn">
+      <strong>FIGHT</strong>
+    </button>
+  </div>
   <app-hero-selector
     [enemy]="true"
     [battleStarted]="battleStarted">
@@ -81,8 +83,8 @@
   </mat-tab>
 </mat-tab-group>
 
-<section class="battleLog">
+
 <mat-button-toggle *ngIf="battleStarted && !isMobile" (click)="showLogToggle()"
                    class="showLogBTN">{{!showLog ? 'Show battle log' : 'Hide battle log'}}</mat-button-toggle>
 <app-battle-log *ngIf="showLog && battleStarted && tabIndex === 2"></app-battle-log>
-</section>
+
