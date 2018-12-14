@@ -20,7 +20,9 @@
               [disabled]="!battleEnded"
               [ngClass]="{'heroBodyParts': !enemy,
               'enemyBodyParts': enemy,
-              'partsSelected': partsSelected}"
+              'partsSelected': partsSelected,
+              'blockSelected': heroPart.checkStatus && !enemy,
+              'attackSelected': heroPart.checkStatus && enemy}"
               [id]="!enemy ? heroPart.part : heroPart.part"
               (click)="choosePoint(heroPart)">
       </button>

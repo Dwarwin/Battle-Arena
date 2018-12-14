@@ -9,49 +9,55 @@
 
     .heroModel
       position: relative
-      height: 326px
+      padding: 10px
 
       .heroImg
         position: relative
-        padding: 10px
-        width: 250px
-        margin-right: 10px
+        max-width: 75%
 
       .heroBodyParts, .enemyBodyParts
         position: absolute
-        height: 60px
-        width: 60px
+        height: 16%
+        width: 15%
         background: rgba(36, 255, 7, 0.5)
 
       .partsSelected
         background: rgba(0, 0, 0, 0.35)
 
       #heroHead, #enemyHeroHead
-        top: 5px
-        right: 70px
+        top: 1%
+        right: 42%
 
       #heroBody, #enemyHeroBody
-        top: 80px
-        right: 70px
+        top: 20%
+        right: 41%
 
       #heroRightHand, #enemyHeroRightHand
-        top: 80px
-        right: 5px
+        top: 25%
+        right: 23%
 
       #heroLeftHand, #enemyHeroLeftHand
-        top: 80px
-        right: 135px
+        top: 25%
+        right: 60%
 
       #heroRightLeg, #enemyHeroRightLeg
-        bottom: 10px
-        right: 50px
+        bottom: 1%
+        right: 35%
 
       #heroLeftLeg, #enemyHeroLeftLeg
-        bottom: 10px
-        right: 135px
+        bottom: 1%
+        right: 60%
 
       .partsSelected
         background: #b79c3a2e
+
+      .blockSelected
+        background: url("../../assets/block.png") no-repeat center
+        background-size: contain
+
+      .attackSelected
+        background: url("../../assets/attack.png") no-repeat center
+        background-size: contain
 
     .heroStats
       font-size: 0.9em
