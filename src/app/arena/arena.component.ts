@@ -19,6 +19,8 @@ export class ArenaComponent implements OnInit, OnDestroy {
   readyForRound: boolean;
   battleEnded: boolean;
   isMobile: boolean;
+  attackedPartsSelected: boolean;
+  blockedPartsSelected: boolean;
   tabIndex = 3;
 
   isMobile$: Observable<boolean>;
@@ -27,6 +29,8 @@ export class ArenaComponent implements OnInit, OnDestroy {
   readyForBattleState$: Subscription;
   readyForRoundState$: Subscription;
   endBattleState$: Subscription;
+  heroParts$: Subscription;
+  enemyParts$: Subscription;
 
   constructor(
     public battleLogService: BattleLogService,
@@ -36,9 +40,8 @@ export class ArenaComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.checkIfMobile();
-    this.readyForBattleState();
-    this.readyForRoundState();
-    this.endBattleState();
+    this.externalSubscriptions();
+
   }
 
   ngOnDestroy() {
@@ -65,22 +68,20 @@ export class ArenaComponent implements OnInit, OnDestroy {
     this.subscribes.push(this.isMobileState$);
   }
 
-  readyForBattleState(): void {
+  externalSubscriptions(): void {
     this.readyForBattleState$ = this.battleService.readyForBattle$
       .subscribe(val => val !== 'yes' ? this.readyForBattle = true : this.readyForBattle = false);
-    this.subscribes.push(this.readyForBattleState$);
-  }
-
-  readyForRoundState(): void {
     this.readyForRoundState$ = this.battleService.readyForRound$
       .subscribe(val => val !== 'yes' ? this.readyForRound = true : this.readyForRound = false);
-    this.subscribes.push(this.readyForRoundState$);
-  }
-
-  endBattleState(): void {
     this.endBattleState$ = this.battleService.battleEnded$
       .subscribe(val => val !== 'yes' ? this.battleEnded = true : this.battleEnded = false);
-    this.subscribes.push(this.endBattleState$);
+
+    this.heroParts$ = this.battleService.blockedPoints$
+      .subscribe(el => el.length < 2 ? this.blockedPartsSelected = false : this.blockedPartsSelected = true);
+    this.enemyParts$ = this.battleService.attackedPoints$
+      .subscribe(el => el.length < 2 ? this.attackedPartsSelected = false : this.attackedPartsSelected = true);
+
+    this.subscribes.push(this.readyForBattleState$, this.readyForRoundState$, this.endBattleState$, this.heroParts$, this.enemyParts$);
   }
 
   startBattle(): void  {

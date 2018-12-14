@@ -51,20 +51,30 @@
 
 <mat-tab-group class="arenaBody" [selectedIndex]="tabIndex" (selectedIndexChange)="tabIndex = $event"
                *ngIf="isMobile && battleStarted">
-  <mat-tab label="Blocks">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon *ngIf="blockedPartsSelected" class="example-tab-icon">done</mat-icon>
+      Blocks
+    </ng-template>
     <app-hero-model
       *ngIf="battleStarted"
       [battleEnded]="battleEnded">
     </app-hero-model>
   </mat-tab>
-  <mat-tab label="Attacks">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon *ngIf="attackedPartsSelected" class="example-tab-icon">done</mat-icon>
+      Attacks
+    </ng-template>
     <app-hero-model
       *ngIf="battleStarted"
       [enemy]="true"
       [battleEnded]="battleEnded">
     </app-hero-model>
   </mat-tab>
-  <mat-tab label="Result">
+  <mat-tab>
+    <ng-template mat-tab-label>Result
+    </ng-template>
     <app-battle-log *ngIf="!showLog && battleStarted" [round]="true"></app-battle-log>
     <mat-button-toggle *ngIf="battleStarted && tabIndex === 2" (click)="showLogToggle()"
                        class="showLogBTN">{{!showLog ? 'Show battle log' : 'Show round result'}}</mat-button-toggle>
