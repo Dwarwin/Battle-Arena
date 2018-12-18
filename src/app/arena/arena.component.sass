@@ -1,34 +1,10 @@
-.btnGroup
-  margin: 5px auto
-  display: flex
-  align-content: center
-  justify-content: center
-
-.endBTN
-  margin: 10px
-  @media screen and (max-width: 900px)
-    margin: 5px
-
-.roundBTN
-  margin: 10px auto
-  display: block
-  @media screen and (max-width: 900px)
-    margin: 5px auto
-
-.arenaBody
-  display: flex
-  flex-direction: row
-  justify-content: center
-  @media screen and (max-width: 900px)
-    flex-direction: column
-    align-items: center
-
 .heroSelector
   display: flex
   flex-direction: row
   justify-content: center
   align-items: center
-  height: calc(100% - 72px)
+  height: 100%
+  animation: slide-up 0.4s ease
   @media screen and (max-width: 900px)
     flex-direction: column
     align-items: center
@@ -40,11 +16,41 @@
   app-hero-selector
     margin-bottom: 15px
 
-.showLogBtn
-  margin: 5px auto
-  display: block
+.battleContainer
+  height: 100%
 
-mat-tab
-  padding: 0 15px
+  .btnGroup
+    margin: 5px auto
+    display: flex
+    align-content: center
+    justify-content: center
+
+  .endBTN
+    margin: 10px
+    @media screen and (max-width: 900px)
+      margin: 5px
+
+  .roundBTN
+    margin: 10px auto
+    display: block
+    @media screen and (max-width: 900px)
+      margin: 5px auto
+
+  .arenaBody
+    display: flex
+    flex-direction: row
+    justify-content: center
+    animation: slide-up 0.4s ease
+
+    @media screen and (max-width: 900px)
+      flex-direction: column
+      align-items: center
+
+  .showLogBtn
+    margin: 5px auto
+    display: block
+
+  mat-tab
+    padding: 0 15px
 
 

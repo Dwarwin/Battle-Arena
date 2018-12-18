@@ -1,32 +1,9 @@
-<button mat-raised-button color="warn"
-        class="roundBTN"
-        *ngIf="battleStarted && battleEnded"
-        [disabled]="readyForRound"
-        (click)="dealDmg(); tabIndex = 2"><strong>Start Round</strong>
-</button>
-<section class="btnGroup">
-  <div>
-    <button mat-raised-button color="accent"
-            class="endBTN"
-            *ngIf="!battleEnded"
-            (click)="endBattle()"><strong>End Battle</strong>
-    </button>
-  </div>
-  <div>
-    <button mat-raised-button color="warn"
-            class="endBTN"
-            *ngIf="!battleEnded"
-            (click)="tryAgain()"><strong>Try Again</strong>
-    </button>
-  </div>
-</section>
 <section class="heroSelector" *ngIf="!battleStarted">
   <app-hero-selector
     [battleStarted]="battleStarted">
   </app-hero-selector>
   <div>
-    <button *ngIf="!battleStarted"
-            [disabled]="readyForBattle"
+    <button [disabled]="readyForBattle"
             (click)="startBattle()"
             class="fightBtn" mat-fab
             color="warn">
@@ -38,52 +15,74 @@
     [battleStarted]="battleStarted">
   </app-hero-selector>
 </section>
-<section class="arenaBody" *ngIf="!isMobile && battleStarted">
-  <app-hero-model
-    *ngIf="battleStarted"
-    [battleEnded]="battleEnded">
-  </app-hero-model>
-  <app-battle-log *ngIf="battleStarted" [round]="true"></app-battle-log>
-  <app-hero-model
-    *ngIf="battleStarted"
-    [enemy]="true"
-    [battleEnded]="battleEnded">
-  </app-hero-model>
-</section>
 
-<mat-tab-group class="arenaBody" [selectedIndex]="tabIndex" (selectedIndexChange)="tabIndex = $event"
-               *ngIf="isMobile && battleStarted">
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon *ngIf="blockedPartsSelected" class="tab-icon">done</mat-icon>
-      Blocks
-    </ng-template>
+<section class="battleContainer" *ngIf="battleStarted">
+
+  <button mat-raised-button color="warn"
+          class="roundBTN"
+          *ngIf="battleEnded"
+          [disabled]="readyForRound"
+          (click)="dealDmg(); tabIndex = 2"><strong>Start Round</strong>
+  </button>
+  <section class="btnGroup">
+    <div>
+      <button mat-raised-button color="accent"
+              class="endBTN"
+              *ngIf="!battleEnded"
+              (click)="endBattle()"><strong>End Battle</strong>
+      </button>
+    </div>
+    <div>
+      <button mat-raised-button color="warn"
+              class="endBTN"
+              *ngIf="!battleEnded"
+              (click)="tryAgain()"><strong>Try Again</strong>
+      </button>
+    </div>
+  </section>
+  <section class="arenaBody" *ngIf="!isMobile">
     <app-hero-model
-      *ngIf="battleStarted"
       [battleEnded]="battleEnded">
     </app-hero-model>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>
-      <mat-icon *ngIf="attackedPartsSelected" class="tab-icon">done</mat-icon>
-      Attacks
-    </ng-template>
+    <app-battle-log [round]="true"></app-battle-log>
     <app-hero-model
-      *ngIf="battleStarted"
       [enemy]="true"
       [battleEnded]="battleEnded">
     </app-hero-model>
-  </mat-tab>
-  <mat-tab>
-    <ng-template mat-tab-label>Result
-    </ng-template>
-    <app-battle-log *ngIf="!showLog && battleStarted" [round]="true"></app-battle-log>
-    <mat-button-toggle *ngIf="battleStarted && tabIndex === 2" (click)="showLogToggle()"
-                       class="showLogBtn">{{!showLog ? 'Show battle log' : 'Show round result'}}</mat-button-toggle>
-  </mat-tab>
-</mat-tab-group>
+  </section>
 
-<mat-button-toggle *ngIf="battleStarted && !isMobile" (click)="showLogToggle()"
-                   class="showLogBtn">{{!showLog ? 'Show battle log' : 'Hide battle log'}}</mat-button-toggle>
-<app-battle-log *ngIf="showLog && battleStarted && tabIndex === 2"></app-battle-log>
+  <mat-tab-group class="arenaBody" [selectedIndex]="tabIndex" (selectedIndexChange)="tabIndex = $event"
+                 *ngIf="isMobile">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon *ngIf="blockedPartsSelected" class="tab-icon">done</mat-icon>
+        Blocks
+      </ng-template>
+      <app-hero-model
+        [battleEnded]="battleEnded">
+      </app-hero-model>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon *ngIf="attackedPartsSelected" class="tab-icon">done</mat-icon>
+        Attacks
+      </ng-template>
+      <app-hero-model
+        [enemy]="true"
+        [battleEnded]="battleEnded">
+      </app-hero-model>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>Result
+      </ng-template>
+      <app-battle-log *ngIf="!showLog" [round]="true"></app-battle-log>
+      <mat-button-toggle *ngIf="tabIndex === 2" (click)="showLogToggle()"
+                         class="showLogBtn">{{!showLog ? 'Show battle log' : 'Show round result'}}</mat-button-toggle>
+    </mat-tab>
+  </mat-tab-group>
 
+  <mat-button-toggle *ngIf="!isMobile" (click)="showLogToggle()"
+                     class="showLogBtn">{{!showLog ? 'Show battle log' : 'Hide battle log'}}</mat-button-toggle>
+  <app-battle-log *ngIf="showLog && tabIndex === 2"></app-battle-log>
+
+</section>
