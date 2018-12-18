@@ -21,7 +21,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
   isMobile: boolean;
   attackedPartsSelected: boolean;
   blockedPartsSelected: boolean;
-  tabIndex = 3;
+  tabIndex = 2;
 
   isMobile$: Observable<boolean>;
   subscribes: Subscription[] = [];
