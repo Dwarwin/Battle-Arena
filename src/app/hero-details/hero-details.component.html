@@ -67,7 +67,7 @@
       <li>Critical hit chance: {{ hero.luck | countAdvStats: 'critical' }}</li>
     </ul>
   </section>
+  <button mat-raised-button color="warn" (click)="goBack()">cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">save</button>
 </section>
-<button mat-raised-button color="warn" (click)="goBack()">cancel</button>
-<button mat-raised-button color="primary" (click)="save()">save</button>
 

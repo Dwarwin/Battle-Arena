@@ -1,6 +1,6 @@
 <mat-toolbar class="header" color="primary">
     <span>
-      {{ title }}
+      Battle-Arena
     </span>
   <span class="fill-remaining-space"></span>
   <mat-nav-list>
@@ -18,5 +18,11 @@
   </mat-menu>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<section *ngIf="loading" class="loader">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</section>
+
+<section *ngIf="!loading" class="router-output">
+  <router-outlet></router-outlet>
+</section>
 

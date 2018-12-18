@@ -55,7 +55,7 @@
                *ngIf="isMobile && battleStarted">
   <mat-tab>
     <ng-template mat-tab-label>
-      <mat-icon *ngIf="blockedPartsSelected" class="example-tab-icon">done</mat-icon>
+      <mat-icon *ngIf="blockedPartsSelected" class="tab-icon">done</mat-icon>
       Blocks
     </ng-template>
     <app-hero-model
@@ -65,7 +65,7 @@
   </mat-tab>
   <mat-tab>
     <ng-template mat-tab-label>
-      <mat-icon *ngIf="attackedPartsSelected" class="example-tab-icon">done</mat-icon>
+      <mat-icon *ngIf="attackedPartsSelected" class="tab-icon">done</mat-icon>
       Attacks
     </ng-template>
     <app-hero-model
@@ -79,12 +79,11 @@
     </ng-template>
     <app-battle-log *ngIf="!showLog && battleStarted" [round]="true"></app-battle-log>
     <mat-button-toggle *ngIf="battleStarted && tabIndex === 2" (click)="showLogToggle()"
-                       class="showLogBTN">{{!showLog ? 'Show battle log' : 'Show round result'}}</mat-button-toggle>
+                       class="showLogBtn">{{!showLog ? 'Show battle log' : 'Show round result'}}</mat-button-toggle>
   </mat-tab>
 </mat-tab-group>
 
-
 <mat-button-toggle *ngIf="battleStarted && !isMobile" (click)="showLogToggle()"
-                   class="showLogBTN">{{!showLog ? 'Show battle log' : 'Hide battle log'}}</mat-button-toggle>
+                   class="showLogBtn">{{!showLog ? 'Show battle log' : 'Hide battle log'}}</mat-button-toggle>
 <app-battle-log *ngIf="showLog && battleStarted && tabIndex === 2"></app-battle-log>
 

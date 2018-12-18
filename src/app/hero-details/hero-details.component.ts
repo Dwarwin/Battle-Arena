@@ -62,7 +62,6 @@ export class HeroDetailsComponent implements OnInit {
   }
 
   goBack(): void {
-    console.log(this.hero);
     this.location.back();
   }
 
