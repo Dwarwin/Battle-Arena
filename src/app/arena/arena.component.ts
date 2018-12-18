@@ -25,12 +25,12 @@ export class ArenaComponent implements OnInit, OnDestroy {
 
   isMobile$: Observable<boolean>;
   subscribes: Subscription[] = [];
-  isMobileState$: Subscription;
-  readyForBattleState$: Subscription;
-  readyForRoundState$: Subscription;
-  endBattleState$: Subscription;
-  heroParts$: Subscription;
-  enemyParts$: Subscription;
+  isMobileState: Subscription;
+  readyForBattleState: Subscription;
+  readyForRoundState: Subscription;
+  endBattleState: Subscription;
+  heroParts: Subscription;
+  enemyParts: Subscription;
 
   constructor(
     public battleLogService: BattleLogService,
@@ -64,24 +64,24 @@ export class ArenaComponent implements OnInit, OnDestroy {
     const checkScreenSize = () => document.body.offsetWidth < 900;
     const screenSizeChanged$ = fromEvent(window, 'resize').pipe(debounceTime(500)).pipe(map(checkScreenSize));
     this.isMobile$ = screenSizeChanged$.pipe(startWith(checkScreenSize()));
-    this.isMobileState$ = this.isMobile$.subscribe(val => this.isMobile = val);
-    this.subscribes.push(this.isMobileState$);
+    this.isMobileState = this.isMobile$.subscribe(val => this.isMobile = val);
+    this.subscribes.push(this.isMobileState);
   }
 
   externalSubscriptions(): void {
-    this.readyForBattleState$ = this.battleService.readyForBattle$
+    this.readyForBattleState = this.battleService.readyForBattle$
       .subscribe(val => val !== 'yes' ? this.readyForBattle = true : this.readyForBattle = false);
-    this.readyForRoundState$ = this.battleService.readyForRound$
+    this.readyForRoundState = this.battleService.readyForRound$
       .subscribe(val => val !== 'yes' ? this.readyForRound = true : this.readyForRound = false);
-    this.endBattleState$ = this.battleService.battleEnded$
+    this.endBattleState = this.battleService.battleEnded$
       .subscribe(val => val !== 'yes' ? this.battleEnded = true : this.battleEnded = false);
 
-    this.heroParts$ = this.battleService.blockedPoints$
+    this.heroParts = this.battleService.blockedPoints$
       .subscribe(el => el.length < 2 ? this.blockedPartsSelected = false : this.blockedPartsSelected = true);
-    this.enemyParts$ = this.battleService.attackedPoints$
+    this.enemyParts = this.battleService.attackedPoints$
       .subscribe(el => el.length < 2 ? this.attackedPartsSelected = false : this.attackedPartsSelected = true);
 
-    this.subscribes.push(this.readyForBattleState$, this.readyForRoundState$, this.endBattleState$, this.heroParts$, this.enemyParts$);
+    this.subscribes.push(this.readyForBattleState, this.readyForRoundState, this.endBattleState, this.heroParts, this.enemyParts);
   }
 
   startBattle(): void  {

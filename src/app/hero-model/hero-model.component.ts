@@ -20,10 +20,10 @@ export class HeroModelComponent implements OnInit, OnDestroy {
   partsSelected: boolean;
   heroParts: Parts[] = HeroParts;
   enemyParts: Parts[] = EnemyHeroParts;
-  heroParts$: Subscription;
-  enemyParts$: Subscription;
-  yourHeroHP$: Subscription;
-  enemyHeroHP$: Subscription;
+  heroPartsSub: Subscription;
+  enemyPartsSub: Subscription;
+  yourHeroHP: Subscription;
+  enemyHeroHP: Subscription;
 
   constructor(private battleService: BattleService) {
   }
@@ -37,25 +37,25 @@ export class HeroModelComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (!this.enemy) {
-      this.heroParts$.unsubscribe();
-      this.yourHeroHP$.unsubscribe();
+      this.heroPartsSub.unsubscribe();
+      this.yourHeroHP.unsubscribe();
     } else {
-      this.enemyParts$.unsubscribe();
-      this.enemyHeroHP$.unsubscribe();
+      this.enemyPartsSub.unsubscribe();
+      this.enemyHeroHP.unsubscribe();
     }
   }
 
   getHeroesParts(): void {
-    !this.enemy ? this.heroParts$ = this.battleService.blockedPoints$
+    !this.enemy ? this.heroPartsSub = this.battleService.blockedPoints$
         .subscribe(el => el.length < 2 ? this.partsSelected = false : this.partsSelected = true)
-      : this.enemyParts$ = this.battleService.attackedPoints$
+      : this.enemyPartsSub = this.battleService.attackedPoints$
         .subscribe(el => el.length < 2 ? this.partsSelected = false : this.partsSelected = true);
   }
 
   getCurrentHP(): void {
     !this.enemy
-      ? this.yourHeroHP$ = this.battleService.yourHeroHP$.subscribe(hp => this.currentHP = hp)
-      : this.enemyHeroHP$ = this.battleService.enemyHeroHP$.subscribe(hp => this.currentHP = hp);
+      ? this.yourHeroHP = this.battleService.yourHeroHP$.subscribe(hp => this.currentHP = hp)
+      : this.enemyHeroHP = this.battleService.enemyHeroHP$.subscribe(hp => this.currentHP = hp);
   }
 
   choosePoint(point: Parts): void {
